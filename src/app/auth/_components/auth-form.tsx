@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -16,7 +17,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import { auth, db } from '@/lib/firebase-config';
-import { kenyanCounties } from '@/lib/kenyan-counties';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -27,24 +27,48 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Landmark, Tractor, ShoppingCart, User as UserIcon } from 'lucide-react';
 import MavunoLogo from '@/components/icons/mavuno-logo';
+import { cn } from '@/lib/utils';
+
+const roles = [
+    {
+        name: 'farmer',
+        label: 'Farmer',
+        icon: UserIcon,
+        description: 'Get crop insights, weather data, and market prices.',
+    },
+    {
+        name: 'buyer',
+        label: 'Buyer',
+        icon: ShoppingCart,
+        description: 'Browse produce, contact farmers, and post purchase requests.',
+    },
+    {
+        name: 'transporter',
+        label: 'Transporter',
+        icon: Tractor,
+        description: 'Connect with farmers and buyers needing logistics.',
+    },
+    {
+        name: 'government',
+        label: 'Government Officer',
+        icon: Landmark,
+        description: 'Access regional agricultural data and reports.',
+    },
+] as const;
+
 
 const signUpSchema = z.object({
   fullName: z.string().min(3, 'Full name must be at least 3 characters'),
   email: z.string().email('Please enter a valid email'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
-  county: z.string().min(1, 'Please select your county'),
+  role: z.enum(['farmer', 'buyer', 'transporter', 'government'], { required_error: 'You must select a role.'}),
 });
 
 const signInSchema = z.object({
@@ -68,7 +92,6 @@ export function AuthForm() {
       email: '',
       phone: '',
       password: '',
-      county: '',
     },
   });
 
@@ -112,7 +135,7 @@ export function AuthForm() {
       fullName: data.fullName || user.displayName || 'Anonymous Farmer',
       email: user.email,
       phone: data.phone || user.phoneNumber || '',
-      county: data.county || '',
+      role: data.role || 'farmer',
       createdAt: new Date(),
     }, { merge: true });
   };
@@ -148,6 +171,7 @@ export function AuthForm() {
         await saveUserToFirestore(user, {
             fullName: user.displayName,
             email: user.email,
+            role: 'farmer', // Default to farmer for Google Sign-in
         });
       }
 
@@ -190,20 +214,9 @@ export function AuthForm() {
       <TabsContent value="sign-up">
         <div className="text-center mb-4">
           <h3 className="text-xl font-semibold">Create Your Mavuno Account</h3>
-          <p className="text-sm text-muted-foreground">Get personalized insights for your county.</p>
+          <p className="text-sm text-muted-foreground">Join Mavuno and connect with Kenya’s smart agriculture network.</p>
         </div>
         <div className="space-y-4">
-            <GoogleSignInButton />
-             <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                    Or continue with
-                    </span>
-                </div>
-            </div>
             <Form {...signUpForm}>
             <form onSubmit={signUpForm.handleSubmit(handleSignUp)} className="space-y-4">
                 <FormField
@@ -259,28 +272,41 @@ export function AuthForm() {
                 )}
                 />
                 <FormField
-                control={signUpForm.control}
-                name="county"
-                render={({ field }) => (
-                    <FormItem>
-                    <FormLabel>County</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading}>
+                    control={signUpForm.control}
+                    name="role"
+                    render={({ field }) => (
+                        <FormItem className="space-y-3">
+                        <FormLabel>Select Your Role</FormLabel>
                         <FormControl>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select your county" />
-                        </SelectTrigger>
+                            <RadioGroup
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                            >
+                            {roles.map(role => (
+                                <FormItem key={role.name}>
+                                    <FormLabel className="cursor-pointer">
+                                        <RadioGroupItem value={role.name} className="sr-only" />
+                                        <Card className={cn(
+                                            "border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground",
+                                            field.value === role.name && "border-primary"
+                                        )}>
+                                            <CardHeader className="flex flex-row items-center justify-between space-y-0 p-4">
+                                                <CardTitle className="text-sm font-medium">{role.label}</CardTitle>
+                                                <role.icon className="h-5 w-5 text-muted-foreground" />
+                                            </CardHeader>
+                                            <CardContent className="p-4 pt-0">
+                                                <p className="text-xs text-muted-foreground">{role.description}</p>
+                                            </CardContent>
+                                        </Card>
+                                    </FormLabel>
+                                </FormItem>
+                            ))}
+                            </RadioGroup>
                         </FormControl>
-                        <SelectContent>
-                        {kenyanCounties.map((county) => (
-                            <SelectItem key={county} value={county}>
-                            {county}
-                            </SelectItem>
-                        ))}
-                        </SelectContent>
-                    </Select>
-                    <FormMessage />
-                    </FormItem>
-                )}
+                        <FormMessage />
+                        </FormItem>
+                    )}
                 />
                 <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -288,6 +314,17 @@ export function AuthForm() {
                 </Button>
             </form>
             </Form>
+             <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                    Or continue with
+                    </span>
+                </div>
+            </div>
+            <GoogleSignInButton />
         </div>
       </TabsContent>
       <TabsContent value="sign-in">

@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
@@ -39,7 +40,7 @@ export default function AuthenticationPage() {
         </div>
       </div>
       <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
+        <div className="mx-auto grid w-full max-w-md gap-6 px-4">
            <div className="flex flex-col items-center text-center gap-2">
              <div className="lg:hidden">
                 <MavunoLogo />
