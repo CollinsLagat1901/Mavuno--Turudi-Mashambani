@@ -10,6 +10,7 @@ import {
   Sheet as SheetIcon,
   ShoppingBag,
   User,
+  BookUser,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
@@ -40,13 +41,14 @@ import {
   SidebarInset,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/firebase-config';
+import { getFirebaseAuth } from '@/lib/firebase-config';
 import { useToast } from '@/hooks/use-toast';
 
 const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
   { href: '#', label: 'Insights', icon: LineChart },
-  { href: '#', label: 'Crops', icon: SheetIcon },
+  { href: '#', label: 'Crop Insights', icon: SheetIcon },
+  { href: '/farm-details', label: 'Farm Details', icon: BookUser },
   { href: '#', label: 'Market', icon: ShoppingBag },
   { href: '#', label: 'Profile', icon: User },
 ];
@@ -62,6 +64,7 @@ export default function DashboardLayout({
 
   const handleLogout = async () => {
     try {
+      const auth = await getFirebaseAuth();
       await signOut(auth);
       toast({
         title: 'Signed Out',
