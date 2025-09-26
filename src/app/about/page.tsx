@@ -15,7 +15,7 @@ const AboutPage = () => {
         {
             name: 'Thee Entity',
             role: 'Lead AI Partner',
-            avatar: 'https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/public/folder/photos/The%20Entity%20Icon.png',
+            avatar: 'https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/public/folder/photos/Thee%20Entity%20(2).png',
             bio: 'Thee Entity is the intelligence engine behind Mavuno, responsible for data analysis, predictive modeling, and generating the insights that empower our farmers.'
         }
     ];
