@@ -15,7 +15,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-import { auth, db } from '@/lib/firebase-config';
+import { getFirebaseInstances } from '@/lib/firebase-config';
 import { kenyanCounties } from '@/lib/kenyan-counties';
 import { Button } from '@/components/ui/button';
 import {
@@ -37,8 +37,9 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
 import MavunoLogo from '@/components/icons/mavuno-logo';
+
+const { auth, db } = getFirebaseInstances();
 
 const signUpSchema = z.object({
   fullName: z.string().min(3, 'Full name must be at least 3 characters'),
@@ -94,7 +95,7 @@ export function AuthForm() {
         title: 'Account Created!',
         description: 'You have been successfully signed up.',
       });
-      router.push('/dashboard'); // Or any other protected route
+      router.push('/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -126,7 +127,7 @@ export function AuthForm() {
         title: 'Signed In!',
         description: 'Welcome back to Mavuno.',
       });
-      router.push('/dashboard'); // Or any other protected route
+      router.push('/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -157,7 +158,8 @@ export function AuthForm() {
         description: `Welcome ${user.displayName || 'to Mavuno'}!`,
       });
       router.push('/dashboard');
-    } catch (error: any) {
+    } catch (error: any)
+{
       toast({
         variant: 'destructive',
         title: 'Google Sign-In Failed',

@@ -11,18 +11,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-let app: FirebaseApp;
-let auth: Auth;
-let db: Firestore;
-
-// This check prevents Firebase from being initialized multiple times.
-if (getApps().length) {
-  app = getApp();
-} else {
-  app = initializeApp(firebaseConfig);
+// This function ensures a single instance of Firebase is used across the app.
+function getFirebaseInstances() {
+  const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const auth: Auth = getAuth(app);
+  const db: Firestore = getFirestore(app);
+  return { app, auth, db };
 }
 
-auth = getAuth(app);
-db = getFirestore(app);
 
-export { app, auth, db };
+export { getFirebaseInstances };
