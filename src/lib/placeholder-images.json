@@ -1,3 +1,16 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-farmer",
+      "description": "A smiling Kenyan farmer in a lush green field.",
+      "imageUrl": "https://images.unsplash.com/photo-1753892209319-d14445a3721f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxLZW55YW4lMjBmYXJtZXIlMjBzbWlsaW5nfGVufDB8fHx8MTc1ODkwOTM4MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "Kenyan farmer smiling"
+    },
+    {
+      "id": "vision-farm",
+      "description": "A subtle image of a Kenyan farm with the flag.",
+      "imageUrl": "https://images.unsplash.com/photo-1654979431509-3a1519188b17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxLZW55YW4lMjBmYXJtfGVufDB8fHx8MTc1ODkwOTM4MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "Kenyan farm"
+    }
+  ]
 }
