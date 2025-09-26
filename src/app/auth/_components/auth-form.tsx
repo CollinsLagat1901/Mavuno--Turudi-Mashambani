@@ -110,9 +110,9 @@ export function AuthForm() {
     const userRef = doc(db, 'users', user.uid);
     await setDoc(userRef, {
       uid: user.uid,
-      fullName: data.fullName || user.displayName,
+      fullName: data.fullName || user.displayName || 'Anonymous Farmer',
       email: user.email,
-      phone: data.phone || '',
+      phone: data.phone || user.phoneNumber || '',
       county: data.county || '',
       createdAt: new Date(),
     }, { merge: true });
@@ -147,8 +147,8 @@ export function AuthForm() {
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (!userDoc.exists()) {
         await saveUserToFirestore(user, {
-            fullName: user.displayName || '',
-            email: user.email || ''
+            fullName: user.displayName,
+            email: user.email,
         });
       }
 
