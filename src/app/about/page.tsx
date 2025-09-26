@@ -13,16 +13,10 @@ const AboutPage = () => {
 
     const teamMembers = [
         {
-            name: 'Collins Lagat',
-            role: 'Founder & CEO',
-            avatar: 'https://avatar.vercel.sh/collins.png',
-            bio: 'Collins is passionate about leveraging technology to solve real-world problems for Kenyan farmers. He provides the vision and drives the mission of Mavuno AI.'
-        },
-        {
-            name: 'Entity AI',
+            name: 'Thee Entity',
             role: 'Lead AI Partner',
-            avatar: 'https://avatar.vercel.sh/ai.png',
-            bio: 'Entity AI is the intelligence engine behind Mavuno, responsible for data analysis, predictive modeling, and generating the insights that empower our farmers.'
+            avatar: 'https://avatar.vercel.sh/thee-entity.png',
+            bio: 'Thee Entity is the intelligence engine behind Mavuno, responsible for data analysis, predictive modeling, and generating the insights that empower our farmers.'
         }
     ];
 
@@ -135,7 +129,7 @@ const AboutPage = () => {
                                The minds behind Mavuno AI.
                             </p>
                         </div>
-                        <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+                        <div className="grid gap-8 md:grid-cols-1 max-w-2xl mx-auto">
                             {teamMembers.map((member) => (
                                 <Card key={member.name} className="text-left overflow-hidden">
                                     <CardContent className="p-6 flex flex-col sm:flex-row items-center gap-6">
