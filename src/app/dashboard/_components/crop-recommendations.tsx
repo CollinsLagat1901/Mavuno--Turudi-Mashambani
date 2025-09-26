@@ -37,7 +37,7 @@ export default function CropRecommendations() {
             return (
               <Card key={crop.name} className="overflow-hidden">
                 {cropImage && (
-                    <div className="relative h-40 w-full">
+                    <div className="relative h-60 w-full">
                         <Image
                         src={cropImage.imageUrl}
                         alt={crop.name}
