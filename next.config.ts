@@ -30,11 +30,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    allowedDevOrigins: [
-      'https://9000-firebase-studio-1758908388974.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev',
-    ],
-  },
+  allowedDevOrigins: [
+    'https://9000-firebase-studio-1758908388974.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev',
+  ],
    env: {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   }
