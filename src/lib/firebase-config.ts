@@ -11,7 +11,8 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+// This check is to prevent Firebase from being initialized on the server multiple times.
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
