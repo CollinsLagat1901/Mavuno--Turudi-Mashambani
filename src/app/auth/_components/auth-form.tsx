@@ -11,6 +11,7 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { auth, db } from '@/lib/firebase-config';
 import { kenyanCounties } from '@/lib/kenyan-counties';
