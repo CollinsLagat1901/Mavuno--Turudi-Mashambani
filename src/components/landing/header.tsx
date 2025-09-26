@@ -10,9 +10,9 @@ const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'About', href: '#' },
-    { name: 'How It Works', href: '#' },
-    { name: 'Contact', href: '#' },
+    { name: 'About', href: '/about' },
+    { name: 'How It Works', href: '/how-it-works' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (

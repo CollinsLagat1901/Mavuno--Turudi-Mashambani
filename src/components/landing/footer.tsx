@@ -5,16 +5,16 @@ import { Separator } from '@/components/ui/separator';
 
 const Footer = () => {
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About', href: '#' },
-    { name: 'Contact', href: '#' },
-    { name: 'Privacy Policy', href: '#' },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+    { name: 'Privacy Policy', href: '/privacy' },
   ];
 
   const socialLinks = [
-    { name: 'Facebook', href: '#', icon: Facebook },
-    { name: 'Twitter', href: '#', icon: Twitter },
-    { name: 'Instagram', href: '#', icon: Instagram },
+    { name: 'Facebook', href: 'https://facebook.com', icon: Facebook },
+    { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
+    { name: 'Instagram', href: 'https://instagram.com', icon: Instagram },
   ];
 
   return (
@@ -40,7 +40,7 @@ const Footer = () => {
             </p>
             <div className="flex items-center gap-4">
                 {socialLinks.map((social) => (
-                    <Link key={social.name} href={social.href} className="hover:text-primary transition-colors">
+                    <Link key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                         <social.icon className="h-5 w-5" />
                         <span className="sr-only">{social.name}</span>
                     </Link>
