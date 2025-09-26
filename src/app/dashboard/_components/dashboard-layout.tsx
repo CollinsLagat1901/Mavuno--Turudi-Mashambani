@@ -41,7 +41,7 @@ import {
   SidebarInset,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { getFirebaseAuth } from '@/lib/firebase-config';
+import { auth } from '@/lib/firebase-config';
 import { useToast } from '@/hooks/use-toast';
 
 const navLinks = [
@@ -64,7 +64,6 @@ export default function DashboardLayout({
 
   const handleLogout = async () => {
     try {
-      const auth = await getFirebaseAuth();
       await signOut(auth);
       toast({
         title: 'Signed Out',
