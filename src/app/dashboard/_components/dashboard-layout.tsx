@@ -11,6 +11,7 @@ import {
   ShoppingBag,
   User,
   BookUser,
+  MessageCircle,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
@@ -46,6 +47,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
+  { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/insights', label: 'Insights', icon: LineChart },
   { href: '/dashboard/crop-insights', label: 'Crop Insights', icon: SheetIcon },
   { href: '/farm-details', label: 'Farm Details', icon: BookUser },
