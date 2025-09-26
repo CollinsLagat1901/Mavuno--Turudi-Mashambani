@@ -35,6 +35,12 @@
       "description": "Green beans growing in a field.",
       "imageUrl": "https://images.unsplash.com/photo-1632640110804-58827a6b37fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxncmVlbiUyMGJlYW5zfGVufDB8fHx8MTc1ODkxMzMwNnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "green beans"
+    },
+    {
+      "id": "maize-insight",
+      "description": "A detailed shot of a maize cob.",
+      "imageUrl": "https://images.unsplash.com/photo-1599822652175-3474d86415a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYWl6ZSUyMGNvYiUyMGNsb3NlfGVufDB8fHx8MTc1ODkxMzM3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "maize cob close"
     }
   ]
 }
