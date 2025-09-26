@@ -5,9 +5,12 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/s
 import { Menu } from 'lucide-react';
 import MavunoLogo from '@/components/icons/mavuno-logo';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const pathname = usePathname();
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
@@ -26,7 +29,10 @@ const Header = () => {
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-foreground/60 transition-colors hover:text-foreground"
+              className={cn(
+                'text-sm font-medium transition-colors hover:text-foreground',
+                pathname === link.href ? 'text-foreground' : 'text-foreground/60'
+              )}
             >
               {link.name}
             </Link>
@@ -59,7 +65,10 @@ const Header = () => {
                   <SheetClose key={link.name} asChild>
                     <Link
                       href={link.href}
-                      className="text-lg font-medium"
+                      className={cn(
+                        "text-lg font-medium",
+                        pathname === link.href ? 'text-primary' : 'text-foreground'
+                      )}
                       onClick={() => setIsSheetOpen(false)}
                     >
                       {link.name}
