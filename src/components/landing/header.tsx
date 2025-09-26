@@ -9,7 +9,7 @@ import { useState } from 'react';
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const navLinks = [
-    { name: 'Home', href: '#' },
+    { name: 'Home', href: '/' },
     { name: 'About', href: '#' },
     { name: 'How It Works', href: '#' },
     { name: 'Contact', href: '#' },
@@ -34,10 +34,10 @@ const Header = () => {
         </nav>
         <div className="hidden items-center gap-2 md:flex">
           <Button variant="outline" asChild>
-            <Link href="#">Login</Link>
+            <Link href="/auth">Login</Link>
           </Button>
           <Button asChild>
-            <Link href="#">Get Started</Link>
+            <Link href="/auth">Get Started</Link>
           </Button>
         </div>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -47,7 +47,7 @@ const Header = () => {
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right">
+          <SheetContent side="right" className="p-0">
             <div className="flex flex-col h-full">
               <div className="p-4 border-b">
                  <Link href="/" onClick={() => setIsSheetOpen(false)}>
@@ -71,12 +71,12 @@ const Header = () => {
                   <div className="flex flex-col gap-2">
                       <SheetClose asChild>
                         <Button variant="outline" asChild>
-                            <Link href="#">Login</Link>
+                            <Link href="/auth">Login</Link>
                         </Button>
                       </SheetClose>
                       <SheetClose asChild>
                         <Button asChild>
-                            <Link href="#">Get Started</Link>
+                            <Link href="/auth">Get Started</Link>
                         </Button>
                       </SheetClose>
                   </div>

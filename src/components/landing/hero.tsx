@@ -33,7 +33,7 @@ const Hero = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Link href="#">Get Started</Link>
+              <Link href="/auth">Get Started</Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
               <Link href="#">Watch Demo</Link>

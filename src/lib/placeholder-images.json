@@ -11,6 +11,12 @@
       "description": "A subtle image of a Kenyan farm with the flag.",
       "imageUrl": "https://images.unsplash.com/photo-1654979431509-3a1519188b17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxLZW55YW4lMjBmYXJtfGVufDB8fHx8MTc1ODkwOTM4MXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "Kenyan farm"
+    },
+    {
+      "id": "auth-hero",
+      "description": "A vibrant image of Kenyan farmers working together in a field.",
+      "imageUrl": "https://images.unsplash.com/photo-1586108326103-924dd009325f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxLZW55YW4lMjBmYXJtZXJzJTIwY3JvcHN8ZW58MHx8fHwxNzU4OTEwNTU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "Kenyan farmers crops"
     }
   ]
 }
