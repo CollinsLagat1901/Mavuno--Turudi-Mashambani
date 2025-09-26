@@ -15,7 +15,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-import { getFirebaseInstances } from '@/lib/firebase-config';
+import { auth, db } from '@/lib/firebase-config';
 import { kenyanCounties } from '@/lib/kenyan-counties';
 import { Button } from '@/components/ui/button';
 import {
@@ -38,8 +38,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import MavunoLogo from '@/components/icons/mavuno-logo';
-
-const { auth, db } = getFirebaseInstances();
 
 const signUpSchema = z.object({
   fullName: z.string().min(3, 'Full name must be at least 3 characters'),

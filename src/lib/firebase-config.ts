@@ -3,21 +3,17 @@ import { getAuth, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyD8KLJDUqXRE3OdhHJxS7KyNped7mlSJq8",
+  authDomain: "thee-entity.firebaseapp.com",
+  projectId: "thee-entity",
+  storageBucket: "thee-entity.firebasestorage.app",
+  messagingSenderId: "873254572005",
+  appId: "1:873254572005:web:24cc46c37106b6d2d3290c"
 };
 
-// This function ensures a single instance of Firebase is used across the app.
-function getFirebaseInstances() {
-  const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  const auth: Auth = getAuth(app);
-  const db: Firestore = getFirestore(app);
-  return { app, auth, db };
-}
+// Initialize Firebase
+const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth: Auth = getAuth(app);
+const db: Firestore = getFirestore(app);
 
-
-export { getFirebaseInstances };
+export { app, auth, db };
