@@ -103,6 +103,31 @@ export function AuthForm() {
     },
   });
 
+  const handleSuccessfulAuth = async (user: User) => {
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      if (userData.role === 'farmer') {
+        router.push('/dashboard');
+      } else {
+        toast({
+            title: 'Dashboard Coming Soon!',
+            description: `The dashboard for the '${userData.role}' role is under construction. You will be redirected home for now.`,
+        });
+        router.push('/');
+      }
+    } else {
+      // New user from Google sign-in, default to farmer and go to details page.
+      await saveUserToFirestore(user, {
+            fullName: user.displayName,
+            email: user.email,
+            role: 'farmer',
+        });
+      router.push('/farm-details');
+    }
+  }
+
   const handleSignUp = async (values: SignUpValues) => {
     setIsLoading(true);
     try {
@@ -114,9 +139,17 @@ export function AuthForm() {
       await saveUserToFirestore(user, values);
       toast({
         title: 'Account Created!',
-        description: 'You have been successfully signed up.',
+        description: 'Please complete your farm details.',
       });
-      router.push('/dashboard');
+      if (values.role === 'farmer') {
+        router.push('/farm-details');
+      } else {
+        toast({
+            title: 'Dashboard Coming Soon!',
+            description: `The dashboard for the '${values.role}' role is under construction. You will be redirected home for now.`,
+        });
+        router.push('/');
+      }
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -143,12 +176,12 @@ export function AuthForm() {
   const handleSignIn = async (values: SignInValues) => {
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      const { user } = await signInWithEmailAndPassword(auth, values.email, values.password);
       toast({
         title: 'Signed In!',
         description: 'Welcome back to Mavuno.',
       });
-      router.push('/dashboard');
+      await handleSuccessfulAuth(user);
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -166,20 +199,11 @@ export function AuthForm() {
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
 
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (!userDoc.exists()) {
-        await saveUserToFirestore(user, {
-            fullName: user.displayName,
-            email: user.email,
-            role: 'farmer', // Default to farmer for Google Sign-in
-        });
-      }
-
       toast({
         title: 'Signed In!',
         description: `Welcome ${user.displayName || 'to Mavuno'}!`,
       });
-      router.push('/dashboard');
+      await handleSuccessfulAuth(user);
     } catch (error: any)
 {
       toast({
@@ -285,8 +309,10 @@ export function AuthForm() {
                             >
                             {roles.map(role => (
                                 <FormItem key={role.name}>
-                                    <FormLabel className="cursor-pointer">
+                                    <FormControl>
                                         <RadioGroupItem value={role.name} className="sr-only" />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer">
                                         <Card className={cn(
                                             "border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground",
                                             field.value === role.name && "border-primary"
