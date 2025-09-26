@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import MavunoLogo from '@/components/icons/mavuno-logo';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { AuthForm } from './_components/auth-form';
+import { Button } from '@/components/ui/button';
 
 export default function AuthenticationPage() {
   const authImage = PlaceHolderImages.find((img) => img.id === 'auth-hero');
