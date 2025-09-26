@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview This file defines a Genkit tool for fetching the current user's farm data from Firestore.
@@ -41,13 +42,13 @@ export const getUserDataTool = ai.defineTool(
     const userRef = doc(db, 'users', userId);
     const userDoc = await getDoc(userRef);
 
-    if (!userDoc.exists() || !userDoc.data().farm) {
+    if (!userDoc.exists() || !userDoc.data().farms || !userDoc.data().farms.farm1) {
       return {
         error: "User has not provided their farm details yet. Ask them to fill out the form."
       }
     }
 
-    const farmData = userDoc.data().farm;
+    const farmData = userDoc.data().farms.farm1;
     return {
       farmName: farmData.name,
       farmSize: farmData.size,
@@ -57,3 +58,5 @@ export const getUserDataTool = ai.defineTool(
     };
   }
 );
+
+    

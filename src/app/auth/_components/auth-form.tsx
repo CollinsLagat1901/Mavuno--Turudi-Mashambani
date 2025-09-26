@@ -12,7 +12,7 @@ import {
   GoogleAuthProvider,
   User,
 } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -109,7 +109,11 @@ export function AuthForm() {
     if (userDoc.exists()) {
       const userData = userDoc.data();
       if (userData.role === 'farmer') {
-        router.push('/dashboard');
+        if(userData.farms) {
+            router.push('/dashboard');
+        } else {
+            router.push('/farm-details');
+        }
       } else {
         toast({
             title: 'Dashboard Coming Soon!',
@@ -165,11 +169,20 @@ export function AuthForm() {
     const userRef = doc(db, 'users', user.uid);
     await setDoc(userRef, {
       uid: user.uid,
-      fullName: data.fullName || user.displayName || 'Anonymous Farmer',
+      name: data.fullName || user.displayName || 'Anonymous Farmer',
       email: user.email,
       phone: data.phone || user.phoneNumber || '',
       role: data.role || 'farmer',
-      createdAt: new Date(),
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      language: 'English', // default
+      experience: 'Beginner', //default
+      goal: 'Profit Maximization', // default
+      preferences: {
+          notifications: ['In-App'],
+          ai_focus: ['Crop selection', 'Market insights'],
+      },
+      farms: {}
     }, { merge: true });
   };
 
@@ -310,9 +323,9 @@ export function AuthForm() {
                             {roles.map(role => (
                                 <FormItem key={role.name}>
                                     <FormControl>
-                                        <RadioGroupItem value={role.name} className="sr-only" />
+                                        <RadioGroupItem value={role.name} id={role.name} className="sr-only" />
                                     </FormControl>
-                                    <FormLabel className="cursor-pointer">
+                                    <FormLabel htmlFor={role.name} className="cursor-pointer">
                                         <Card className={cn(
                                             "border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground",
                                             field.value === role.name && "border-primary"
@@ -414,3 +427,5 @@ export function AuthForm() {
     </Tabs>
   );
 }
+
+    

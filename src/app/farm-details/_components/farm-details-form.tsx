@@ -1,10 +1,11 @@
+
 'use client';
 
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { auth, db } from '@/lib/firebase-config';
 import { Button } from '@/components/ui/button';
@@ -110,34 +111,48 @@ export function FarmDetailsForm() {
       }
 
       const userRef = doc(db, 'users', user.uid);
+      
+      const mainCropsList = values.mainCrops?.split(',').map(s => s.trim()) || [];
+      const cropsData = mainCropsList.reduce((acc, cropName, index) => {
+        acc[`crop${index + 1}`] = { 
+            name: cropName,
+            stage: 'Planting', // default value
+            season: 'Long Rains', // default value
+            method: values.farmingMethod,
+            expectedYield: 0 // default value
+        };
+        return acc;
+      }, {} as any);
+
       await setDoc(
         userRef,
         {
-          fullName: values.fullName,
+          name: values.fullName,
           phone: values.phone,
-          experienceLevel: values.experienceLevel,
-          farm: {
-            name: values.farmName,
-            size: values.farmSize,
-            farmingType: values.farmingType,
-            location: {
-              county: values.county,
-              subCounty: values.subCounty,
-              lat: values.latitude,
-              lng: values.longitude,
-            },
-            soilType: values.soilType,
-            irrigation: values.irrigationAccess,
-            waterSource: values.waterSource,
+          experience: values.experienceLevel,
+          goal: values.mainGoal,
+          challenges: values.challenges?.split(',').map(s => s.trim()),
+          farms: {
+            farm1: {
+              name: values.farmName,
+              size: values.farmSize,
+              farmingType: values.farmingType,
+              location: {
+                county: values.county,
+                subCounty: values.subCounty,
+                gps: [values.latitude, values.longitude],
+              },
+              soilType: values.soilType,
+              irrigation: values.irrigationAccess ? 'Yes' : 'No',
+              waterSource: values.waterSource,
+              crops: cropsData
+            }
           },
-          crops: {
-            mainCrops: values.mainCrops?.split(',').map(s => s.trim()),
-            farmingMethod: values.farmingMethod,
+          preferences: { // Adding default preferences
+              notifications: ["In-App"],
+              ai_focus: ["Crop selection", "Market insights"]
           },
-          goals: {
-            mainGoal: values.mainGoal,
-            challenges: values.challenges?.split(',').map(s => s.trim()),
-          }
+          updatedAt: serverTimestamp(),
         },
         { merge: true }
       );
@@ -467,3 +482,5 @@ export function FarmDetailsForm() {
     </Form>
   );
 }
+
+    
