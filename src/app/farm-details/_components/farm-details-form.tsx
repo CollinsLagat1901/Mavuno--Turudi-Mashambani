@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { doc, setDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-import { getFirebaseAuth, getFirebaseDb } from '@/lib/firebase-config';
+import { auth, db } from '@/lib/firebase-config';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -60,8 +60,6 @@ export function FarmDetailsForm() {
   const handleSubmit = async (values: FarmDetailsValues) => {
     setIsLoading(true);
     try {
-        const auth = await getFirebaseAuth();
-        const db = await getFirebaseDb();
         const user = auth.currentUser;
 
         if (!user) {
