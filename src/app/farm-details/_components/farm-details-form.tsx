@@ -158,7 +158,7 @@ export function FarmDetailsForm() {
       );
 
       toast({
-        title: 'Farm Details Saved!',
+        title: 'Farmer Details Saved!',
         description: 'Your farm information has been successfully updated.',
       });
       router.push('/dashboard');

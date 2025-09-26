@@ -50,7 +50,7 @@ const navLinks = [
   { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/insights', label: 'Insights', icon: LineChart },
   { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
-  { href: '/farm-details', label: 'Farm Details', icon: BookUser },
+  { href: '/farm-details', label: 'Farmer Details', icon: BookUser },
   { href: '/dashboard/profile', label: 'Profile', icon: User },
 ];
 
