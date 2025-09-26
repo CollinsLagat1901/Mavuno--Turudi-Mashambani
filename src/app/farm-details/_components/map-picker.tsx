@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   GoogleMap,
   useJsApiLoader,
@@ -37,9 +37,9 @@ const MapPicker: React.FC<MapPickerProps> = ({ onLocationChange }) => {
   const [autocomplete, setAutocomplete] =
     useState<google.maps.places.Autocomplete | null>(null);
 
-  const geocoder = new google.maps.Geocoder();
-
-  const reverseGeocode = (latLng: google.maps.LatLng) => {
+  const reverseGeocode = useCallback((latLng: google.maps.LatLng) => {
+    if (!isLoaded) return;
+    const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ location: latLng }, (results, status) => {
       if (status === 'OK' && results && results[0]) {
         let county = '';
@@ -55,7 +55,7 @@ const MapPicker: React.FC<MapPickerProps> = ({ onLocationChange }) => {
         onLocationChange(latLng.lat(), latLng.lng(), county, subCounty);
       }
     });
-  };
+  }, [isLoaded, onLocationChange]);
 
   const handleMapClick = useCallback((event: google.maps.MapMouseEvent) => {
     if (event.latLng) {
@@ -63,7 +63,7 @@ const MapPicker: React.FC<MapPickerProps> = ({ onLocationChange }) => {
       setMarkerPosition(newPos);
       reverseGeocode(event.latLng);
     }
-  }, []);
+  }, [reverseGeocode]);
 
   const handleMarkerDragEnd = useCallback(
     (event: google.maps.MapMouseEvent) => {
@@ -73,7 +73,7 @@ const MapPicker: React.FC<MapPickerProps> = ({ onLocationChange }) => {
         reverseGeocode(event.latLng);
       }
     },
-    []
+    [reverseGeocode]
   );
 
   const onPlaceChanged = () => {
@@ -102,10 +102,19 @@ const MapPicker: React.FC<MapPickerProps> = ({ onLocationChange }) => {
         setMarkerPosition(newPos);
         map?.panTo(newPos);
         map?.setZoom(15);
-        reverseGeocode(new google.maps.LatLng(newPos.lat, newPos.lng));
+        if(isLoaded){
+          reverseGeocode(new window.google.maps.LatLng(newPos.lat, newPos.lng));
+        }
       });
     }
   };
+  
+  useEffect(() => {
+    if (isLoaded) {
+      // Set initial location on load
+      reverseGeocode(new window.google.maps.LatLng(defaultCenter.lat, defaultCenter.lng));
+    }
+  }, [isLoaded, reverseGeocode]);
 
   if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded) return <div className="flex items-center justify-center h-[400px]"><Loader2 className="h-8 w-8 animate-spin text-primary" /> <p className="ml-2">Loading Map...</p></div>;
