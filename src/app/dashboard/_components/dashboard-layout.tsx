@@ -46,11 +46,11 @@ import { useToast } from '@/hooks/use-toast';
 
 const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
-  { href: '#', label: 'Insights', icon: LineChart },
-  { href: '#', label: 'Crop Insights', icon: SheetIcon },
+  { href: '/dashboard/insights', label: 'Insights', icon: LineChart },
+  { href: '/dashboard/crop-insights', label: 'Crop Insights', icon: SheetIcon },
   { href: '/farm-details', label: 'Farm Details', icon: BookUser },
-  { href: '#', label: 'Market', icon: ShoppingBag },
-  { href: '#', label: 'Profile', icon: User },
+  { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
+  { href: '/dashboard/profile', label: 'Profile', icon: User },
 ];
 
 export default function DashboardLayout({
