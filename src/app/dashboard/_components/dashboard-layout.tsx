@@ -49,7 +49,7 @@ const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
   { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/insights', label: 'Insights', icon: LineChart },
-  { href: '/dashboard/crop-insights', label: 'Crop Insights', icon: SheetIcon },
+  { href: '/dashboard/crop-insights/maize', label: 'Crop Insights', icon: SheetIcon },
   { href: '/farm-details', label: 'Farm Details', icon: BookUser },
   { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
   { href: '/dashboard/profile', label: 'Profile', icon: User },
