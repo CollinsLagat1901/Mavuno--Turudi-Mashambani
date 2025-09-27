@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
+import FloatingChat from '@/components/ui/floating-chat';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <FloatingChat />
         </ThemeProvider>
       </body>
     </html>
