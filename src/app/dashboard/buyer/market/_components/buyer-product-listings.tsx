@@ -104,8 +104,8 @@ export default function BuyerProductListings() {
                   <TableCell>{item.lastUpdated}</TableCell>
                   <TableCell className="text-right">
                       <Button size="sm" asChild>
-                        <Link href={`/dashboard/messages?recipient=${item.farmerId}&listing=${item.id}`}>
-                           <ShoppingCart className="mr-2 h-4 w-4" /> Buy
+                        <Link href={`/dashboard/payment/${item.id}`}>
+                           <ShoppingCart className="mr-2 h-4 w-4" /> Buy Now
                         </Link>
                       </Button>
                   </TableCell>
@@ -118,5 +118,3 @@ export default function BuyerProductListings() {
     </Card>
   );
 }
-
-    
