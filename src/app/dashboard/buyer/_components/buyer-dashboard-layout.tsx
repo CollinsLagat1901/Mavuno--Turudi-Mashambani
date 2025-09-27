@@ -49,7 +49,7 @@ const navLinks = [
   { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/buyer/market', label: 'Market Analysis', icon: LineChart },
   { href: '/dashboard/buyer/profile', label: 'Profile', icon: UserIcon },
-  { href: '/dashboard/settings', label: 'Settings', icon: Settings },
+  { href: '/dashboard/buyer/settings', label: 'Settings', icon: Settings },
 ];
 
 interface UserData {
@@ -112,7 +112,7 @@ export default function BuyerDashboardLayout({
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
            <DropdownMenuItem asChild>
-            <Link href="/dashboard/settings">
+            <Link href="/dashboard/buyer/settings">
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </Link>
