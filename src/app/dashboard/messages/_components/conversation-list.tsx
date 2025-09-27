@@ -1,4 +1,3 @@
-
 'use client';
 import { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot, orderBy, getDoc, doc as firestoreDoc } from 'firebase/firestore';
@@ -30,7 +29,7 @@ const FormattedDate = ({ date }: { date: any }) => {
     const [formattedDate, setFormattedDate] = useState('');
 
     useEffect(() => {
-        if (date) {
+        if (date?.toDate) {
             setFormattedDate(formatDistanceToNow(date.toDate(), { addSuffix: true }));
         }
     }, [date]);
