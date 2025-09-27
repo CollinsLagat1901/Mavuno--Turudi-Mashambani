@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { MapPin, Zap, TrendingUp, Sparkles, Tag } from 'lucide-react';
 
-export default function MarketOverview() {
+export default function BuyerMarketOverview() {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card>

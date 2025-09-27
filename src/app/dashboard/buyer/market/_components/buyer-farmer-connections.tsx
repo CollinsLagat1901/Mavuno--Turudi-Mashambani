@@ -12,7 +12,7 @@ const farmers = [
   { name: 'Kilimo Fresh', location: 'Kiambu', crops: ['Tomatoes', 'Cabbages', 'Kales'], rating: 4.9, verified: false },
 ];
 
-export default function FarmerConnections() {
+export default function BuyerFarmerConnections() {
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between">

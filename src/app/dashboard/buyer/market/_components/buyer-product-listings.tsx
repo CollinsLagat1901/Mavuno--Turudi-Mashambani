@@ -35,7 +35,7 @@ const priceData = [
   { crop: 'Avocado', location: 'Muranga', price: 90, trend: 3, lastUpdated: 'Today', grade: 'A' },
 ];
 
-export default function ProductListings() {
+export default function BuyerProductListings() {
   return (
     <Card>
       <CardHeader>

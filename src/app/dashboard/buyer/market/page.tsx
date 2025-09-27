@@ -5,17 +5,17 @@ import { auth, db } from '@/lib/firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 
-import BuyerDashboardLayout from './_components/buyer-dashboard-layout';
-import BuyerProductListings from './market/_components/buyer-product-listings';
-import BuyerMarketOverview from './market/_components/buyer-market-overview';
-import BuyerFarmerConnections from './market/_components/buyer-farmer-connections';
+import BuyerDashboardLayout from '../_components/buyer-dashboard-layout';
+import BuyerProductListings from './_components/buyer-product-listings';
+import BuyerMarketOverview from './_components/buyer-market-overview';
+import BuyerFarmerConnections from './_components/buyer-farmer-connections';
 import { Separator } from '@/components/ui/separator';
 
 interface UserData {
     name?: string;
 }
 
-export default function BuyerDashboardPage() {
+export default function BuyerMarketPage() {
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -40,10 +40,10 @@ export default function BuyerDashboardPage() {
       <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tight text-primary">
-            Welcome, {loading ? '...' : userData?.name || 'Buyer'} 🛒
+            Market Analysis 📈
             </h1>
           <p className="text-muted-foreground">
-            Discover produce, connect with farmers, and manage your purchases.
+            Real-time prices, trends, and opportunities. Your command center for the agricultural market.
           </p>
         </div>
         <Separator />
