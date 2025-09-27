@@ -56,7 +56,7 @@ const roles = [
     },
     {
         name: 'government',
-        label: 'Government Officer',
+        label: 'Admin / Govt. Officer',
         icon: Landmark,
         description: 'Access regional agricultural data and reports.',
     },
@@ -135,11 +135,7 @@ export function AuthForm() {
              router.push('/dashboard/transporter');
             break;
         case 'government':
-            toast({
-                title: 'Dashboard Coming Soon!',
-                description: `The dashboard for the '${userData.role}' role is under construction. You will be redirected home for now.`,
-            });
-            router.push('/');
+             router.push('/dashboard/settings');
             break;
         default:
             // Fallback for any other case is to send to farm details setup
@@ -436,5 +432,7 @@ export function AuthForm() {
     </Tabs>
   );
 }
+
+    
 
     
