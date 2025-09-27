@@ -10,12 +10,8 @@ export default function FarmDetailsPage() {
         <div className="flex items-center justify-center">
             <Card className="w-full max-w-3xl">
                 <CardHeader className="text-center">
-                <div className="space-y-2 mb-4">
-                    <p className="text-sm font-medium text-muted-foreground">Step 2 of 3</p>
-                    <Progress value={66} className="w-full" />
-                </div>
-                <CardTitle className="text-3xl font-bold text-primary">Farmer Profile Setup</CardTitle>
-                <CardDescription>Tell us more about your farm so Mavuno can give you the best recommendations.</CardDescription>
+                <CardTitle className="text-3xl font-bold text-primary">Farm Data Submission</CardTitle>
+                <CardDescription>Provide your latest farm details. Mavuno will analyze this data to give you fresh insights.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <FarmDetailsForm />
