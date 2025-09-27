@@ -13,7 +13,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const GenerateInsightsInputSchema = z.object({
+const GenerateInsightsInputSchema = z.object({
   soilType: z.string(),
   landSize: z.number(),
   county: z.string(),
@@ -26,7 +26,7 @@ export const GenerateInsightsInputSchema = z.object({
 });
 export type GenerateInsightsInput = z.infer<typeof GenerateInsightsInputSchema>;
 
-export const GenerateInsightsOutputSchema = z.object({
+const GenerateInsightsOutputSchema = z.object({
   recommendedCrops: z
     .array(z.string())
     .describe('A list of the top 2-3 recommended crops.'),
