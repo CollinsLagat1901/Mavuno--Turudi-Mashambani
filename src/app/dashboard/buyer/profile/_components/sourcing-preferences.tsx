@@ -22,7 +22,7 @@ export default function SourcingPreferences({ userData, loading }: SourcingPrefe
     const preferencesData = {
         preferredCrops: userData?.sourcingPreferences?.preferredCrops?.join(', ') || "Not set",
         targetRegions: userData?.sourcingPreferences?.targetRegions?.join(', ') || "Not set",
-        notifications: userData?.sourcingPreferences?.notifications || "Not set",
+        notifications: userData?.sourcingPreferences?.notifications || "In-App, Email",
         qualityTier: userData?.sourcingPreferences?.qualityTier || "Not set"
     }
 
@@ -52,3 +52,5 @@ export default function SourcingPreferences({ userData, loading }: SourcingPrefe
         </Card>
     );
 }
+
+    

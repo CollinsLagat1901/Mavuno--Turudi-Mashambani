@@ -28,9 +28,9 @@ export default function CompanyInfo({ userData, loading }: CompanyInfoProps) {
 
     const companyInfoItems = [
         { icon: <Building />, label: "Company Name", value: companyData.name },
+        { icon: <ShoppingBag />, label: "Business Type", value: companyData.type },
         { icon: <MapPin />, label: "Head Office", value: companyData.location },
         { icon: <Globe />, label: "Website", value: companyData.website },
-        { icon: <ShoppingBag />, label: "Business Type", value: companyData.type },
     ]
 
     return (
@@ -55,3 +55,5 @@ export default function CompanyInfo({ userData, loading }: CompanyInfoProps) {
         </Card>
     );
 }
+
+    

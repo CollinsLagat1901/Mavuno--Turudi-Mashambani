@@ -26,22 +26,44 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Pencil } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 const profileSchema = z.object({
   fullName: z.string().min(3, 'Full name must be at least 3 characters'),
-  businessName: z.string().optional(),
   phone: z.string().min(10, 'Please enter a valid phone number'),
+
+  // Company Info
+  businessName: z.string().optional(),
+  companyLocation: z.string().optional(),
+  website: z.string().optional(),
+  businessType: z.string().optional(),
+
+  // Sourcing Preferences
   preferredCrops: z.string().optional(),
+  targetRegions: z.string().optional(),
+  qualityTier: z.string().optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
 interface EditProfileDialogProps {
     userData: any;
-    onProfileUpdate: (data: Partial<ProfileFormValues>) => void;
+    onProfileUpdate: (data: any) => void;
 }
 
 export default function EditProfileDialog({ userData, onProfileUpdate }: EditProfileDialogProps) {
@@ -53,9 +75,14 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
     resolver: zodResolver(profileSchema),
     defaultValues: {
         fullName: '',
-        businessName: '',
         phone: '',
+        businessName: '',
+        companyLocation: '',
+        website: '',
+        businessType: '',
         preferredCrops: '',
+        targetRegions: '',
+        qualityTier: '',
     },
   });
 
@@ -63,12 +90,17 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
     if (userData) {
       form.reset({
         fullName: userData.name || '',
-        businessName: userData.companyInfo?.name || '',
         phone: userData.phone || '',
+        businessName: userData.companyInfo?.name || '',
+        companyLocation: userData.companyInfo?.location || '',
+        website: userData.companyInfo?.website || '',
+        businessType: userData.companyInfo?.type || '',
         preferredCrops: (userData.sourcingPreferences?.preferredCrops || []).join(', '),
+        targetRegions: (userData.sourcingPreferences?.targetRegions || []).join(', '),
+        qualityTier: userData.sourcingPreferences?.qualityTier || '',
       });
     }
-  }, [userData, form]);
+  }, [userData, form, isOpen]);
 
 
   const handleSubmit = async (values: ProfileFormValues) => {
@@ -80,24 +112,31 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
         }
 
         const userRef = doc(db, 'users', user.uid);
-
-        await setDoc(userRef, {
+        
+        const dataToSave = {
             name: values.fullName,
             phone: values.phone,
             companyInfo: {
-                name: values.businessName
+                name: values.businessName,
+                location: values.companyLocation,
+                website: values.website,
+                type: values.businessType,
             },
             sourcingPreferences: {
-                preferredCrops: values.preferredCrops?.split(',').map(s => s.trim()) || []
+                preferredCrops: values.preferredCrops?.split(',').map(s => s.trim()).filter(Boolean) || [],
+                targetRegions: values.targetRegions?.split(',').map(s => s.trim()).filter(Boolean) || [],
+                qualityTier: values.qualityTier,
             }
-        }, { merge: true });
+        };
+
+        await setDoc(userRef, dataToSave, { merge: true });
 
         toast({
             title: "Profile Updated!",
             description: "Your information has been saved successfully.",
         });
 
-        onProfileUpdate(values);
+        onProfileUpdate(dataToSave);
         setIsOpen(false);
     } catch (error: any) {
       toast({
@@ -118,7 +157,7 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
           Edit Profile
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Edit Buyer Profile</DialogTitle>
           <DialogDescription>
@@ -126,60 +165,150 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 py-4">
-                <FormField
-                    control={form.control}
-                    name="fullName"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                            <Input placeholder="e.g., Collins Buyer" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="businessName"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Business Name (Optional)</FormLabel>
-                        <FormControl>
-                            <Input placeholder="e.g., Fresh Produce Inc." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
-                        <FormControl>
-                            <Input placeholder="e.g., 0700111222" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="preferredCrops"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Sourcing Preferences</FormLabel>
-                        <FormControl>
-                            <Input placeholder="e.g., Avocado, Mangoes, French Beans" {...field} />
-                        </FormControl>
-                         <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <DialogFooter>
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+                <Accordion type="multiple" defaultValue={['personal', 'sourcing']} className="w-full">
+                    <AccordionItem value="personal">
+                        <AccordionTrigger>Personal & Company Info</AccordionTrigger>
+                        <AccordionContent className="space-y-4 pt-2">
+                             <FormField
+                                control={form.control}
+                                name="fullName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Full Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., Collins Buyer" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="phone"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Phone Number</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., 0700111222" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="businessName"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Business Name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., Fresh Produce Inc." {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={form.control}
+                                name="businessType"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Business Type</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl><SelectTrigger><SelectValue placeholder="Select business type" /></SelectTrigger></FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="Wholesaler">Wholesaler</SelectItem>
+                                                <SelectItem value="Retailer">Retailer</SelectItem>
+                                                <SelectItem value="Exporter">Exporter</SelectItem>
+                                                <SelectItem value="Supermarket">Supermarket / Distributor</SelectItem>
+                                                <SelectItem value="Institutional">Government / Institutional</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={form.control}
+                                name="companyLocation"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Company Location</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., Nairobi, Kenya" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={form.control}
+                                name="website"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Website (Optional)</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., https://mybusiness.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </AccordionContent>
+                    </AccordionItem>
+                     <AccordionItem value="sourcing">
+                        <AccordionTrigger>Sourcing Preferences</AccordionTrigger>
+                        <AccordionContent className="space-y-4 pt-2">
+                             <FormField
+                                control={form.control}
+                                name="preferredCrops"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Preferred Crops</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., Avocado, Mangoes, French Beans" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={form.control}
+                                name="targetRegions"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>Target Sourcing Regions</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., Nakuru, Kiambu" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <FormField
+                                control={form.control}
+                                name="qualityTier"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Preferred Quality Tier</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <FormControl><SelectTrigger><SelectValue placeholder="Select quality standard" /></SelectTrigger></FormControl>
+                                            <SelectContent>
+                                                <SelectItem value="Grade A">Grade A (Premium/Export)</SelectItem>
+                                                <SelectItem value="Grade B">Grade B (Standard)</SelectItem>
+                                                <SelectItem value="Any">Any</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+
+                <DialogFooter className="pt-4">
                     <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
                     <Button type="submit" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -192,3 +321,5 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
     </Dialog>
   );
 }
+
+    
