@@ -109,7 +109,7 @@ export function AuthForm() {
     if (userDoc.exists()) {
       const userData = userDoc.data();
       if (userData.role === 'farmer') {
-        if(userData.farms) {
+        if(userData.farms && Object.keys(userData.farms).length > 0) {
             router.push('/dashboard');
         } else {
             router.push('/farm-details');
@@ -128,7 +128,7 @@ export function AuthForm() {
       await saveUserToFirestore(user, {
             fullName: user.displayName,
             email: user.email,
-            role: 'farmer',
+            role: 'farmer', // Default role for Google Sign-In
         });
       router.push('/farm-details');
     }
@@ -184,14 +184,6 @@ export function AuthForm() {
       role: data.role || 'farmer',
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
-      language: 'English', // default
-      experience: 'Beginner', //default
-      goal: 'Profit Maximization', // default
-      preferences: {
-          notifications: ['In-App'],
-          ai_focus: ['Crop selection', 'Market insights'],
-      },
-      ...(data.role === 'farmer' && { farms: {} })
     }, { merge: true });
   };
 

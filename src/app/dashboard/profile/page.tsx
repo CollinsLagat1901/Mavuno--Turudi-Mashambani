@@ -36,6 +36,8 @@ interface UserData {
             soilType?: string;
             irrigation?: string;
             waterSource?: string;
+            marketAccess?: string;
+            farmingType?: string;
             crops?: {
                 [key: string]: {
                     name?: string;
@@ -47,6 +49,11 @@ interface UserData {
             }
         }
     }
+    preferences?: {
+      ai_focus?: string[];
+      notifications?: string[];
+    };
+    challenges?: string[];
 }
 
 export default function ProfilePage() {
@@ -108,3 +115,5 @@ export default function ProfilePage() {
     </DashboardLayout>
   );
 }
+
+    

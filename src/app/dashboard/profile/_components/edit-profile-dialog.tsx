@@ -118,7 +118,7 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
         irrigationAccess: farm?.irrigation === 'Yes',
         waterSource: farm?.waterSource || 'Rain-fed',
         mainCrops: crops,
-        farmingMethod: crops ? (Object.values(farm.crops)[0] as any).method : 'Conventional',
+        farmingMethod: (farm?.crops && Object.values(farm.crops).length > 0) ? (Object.values(farm.crops)[0] as any).method : 'Conventional',
         mainGoal: userData.goal || 'Profit Maximization',
         challenges: (userData.challenges || []).join(', '),
       });
@@ -161,15 +161,42 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
             'farms.farm1.waterSource': values.waterSource,
             'farms.farm1.crops': cropsData,
         };
+        
+        // Firestore doesn't allow dot notation directly in setDoc with merge:true for nested objects in this way.
+        // We need to update the fields manually.
+        const updateData = {
+          name: values.fullName,
+          phone: values.phone,
+          experience: values.experienceLevel,
+          goal: values.mainGoal,
+          challenges: values.challenges?.split(',').map(s => s.trim()).filter(Boolean),
+          farms: {
+            farm1: {
+              ...userData.farms?.farm1, // preserve existing fields like gps
+              name: values.farmName,
+              size: values.farmSize,
+              farmingType: values.farmingType,
+              location: {
+                ...userData.farms?.farm1?.location,
+                subCounty: values.subCounty,
+              },
+              soilType: values.soilType,
+              irrigation: values.irrigationAccess ? 'Yes' : 'No',
+              waterSource: values.waterSource,
+              crops: cropsData,
+            },
+          }
+        };
 
-        await setDoc(userRef, dataToSave, { merge: true });
+
+        await setDoc(userRef, updateData, { merge: true });
 
         toast({
             title: "Profile Updated!",
             description: "Your information has been saved successfully.",
         });
 
-        onProfileUpdate(dataToSave);
+        onProfileUpdate(updateData);
         setIsOpen(false);
     } catch (error: any) {
       toast({
@@ -283,7 +310,10 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
                         <AccordionContent className="space-y-4 pt-4">
                              <FormField name="mainGoal" control={form.control} render={({ field }) => (
                                 <FormItem><FormLabel>Main Goal</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl><SelectContent>
-                                    <SelectItem value="Profit Maximization">Profit Maximization</SelectItem><SelectItem value="Sustainability">Sustainability</SelectItem><SelectItem value="Food Security">Food Security</SelectItem><SelectItem value="Export">Export</SelectItem>
+                                    <SelectItem value="Profit Maximization">Profit Maximization</SelectItem>
+                                    <SelectItem value="Sustainability">Sustainability</SelectItem>
+                                    <SelectItem value="Food Security">Food Security</SelectItem>
+                                    <SelectItem value="Export">Export</SelectItem>
                                 </SelectContent></Select><FormMessage /></FormItem>
                             )}/>
                             <FormField name="challenges" control={form.control} render={({ field }) => (
@@ -306,3 +336,5 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
     </Dialog>
   );
 }
+
+    

@@ -119,7 +119,7 @@ export function FarmDetailsForm() {
             stage: 'Planting', // default value
             season: 'Long Rains', // default value
             method: values.farmingMethod,
-            expectedYield: 0 // default value
+            expectedYield: '0 bags' // default value
         };
         return acc;
       }, {} as any);
@@ -131,8 +131,7 @@ export function FarmDetailsForm() {
           phone: values.phone,
           experience: values.experienceLevel,
           goal: values.mainGoal,
-          challenges: values.challenges?.split(',').map(s => s.trim()).filter(Boolean),
-          role: 'farmer',
+          challenges: values.challenges?.split(',').map(s => s.trim()).filter(Boolean) || [],
           farms: {
             farm1: {
               name: values.farmName,

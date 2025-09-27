@@ -18,6 +18,7 @@ interface FarmData {
     irrigation?: string;
     waterSource?: string;
     marketAccess?: string;
+    farmingType?: string;
 }
 
 interface FarmInfoProps {
@@ -30,10 +31,12 @@ export default function FarmInfo({ farmData, loading }: FarmInfoProps) {
   const displayData = {
     name: farmData?.name || 'N/A',
     size: farmData?.size ? `${farmData.size} Acres` : 'N/A',
-    location: farmData?.location?.county ? `${farmData.location.county}, ${farmData.location.subCounty}` : 'N/A',
+    farmingType: farmData?.farmingType || 'N/A',
+    location: farmData?.location?.county ? `${farmData.location.subCounty}, ${farmData.location.county}` : 'N/A',
     gps: farmData?.location?.gps ? `(${farmData.location.gps[0].toFixed(3)}, ${farmData.location.gps[1].toFixed(3)})` : '(N/A)',
     soil: farmData?.soilType || 'N/A',
     irrigation: farmData?.irrigation || 'N/A',
+    waterSource: farmData?.waterSource || 'N/A',
     marketAccess: farmData?.marketAccess || 'Moderate',
   };
 
@@ -41,7 +44,9 @@ export default function FarmInfo({ farmData, loading }: FarmInfoProps) {
         { icon: <Tractor />, label: "Farm Name", value: displayData.name },
         { icon: <Ruler />, label: "Farm Size", value: displayData.size },
         { icon: <MapPin />, label: "Location", value: displayData.location },
+        { icon: <Tractor />, label: "Farming Type", value: displayData.farmingType },
         { icon: <Droplets />, label: "Irrigation Access", value: displayData.irrigation },
+        { icon: <Droplets />, label: "Water Source", value: displayData.waterSource },
         { icon: <TestTube />, label: "Soil Type", value: displayData.soil },
         { icon: <ShoppingBasket />, label: "Market Access", value: displayData.marketAccess },
     ];
@@ -93,3 +98,5 @@ export default function FarmInfo({ farmData, loading }: FarmInfoProps) {
         </Card>
     );
 }
+
+    
