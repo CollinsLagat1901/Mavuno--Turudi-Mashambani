@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -122,7 +121,7 @@ export function FarmDetailsForm() {
         title: 'Farm Data Submitted!',
         description: 'Your data has been submitted. AI analysis is being processed.',
       });
-      router.push('/dashboard');
+      router.push('/dashboard/insights');
     } catch (error: any) {
       toast({
         variant: 'destructive',
