@@ -65,18 +65,18 @@ export default function FloatingChat() {
         setIsLoading(true);
         form.reset();
 
-        const history: Part[] = messages.map(msg => ({
+        const historyForAI: {role: 'user' | 'model', content: string}[] = messages.map(msg => ({
             role: msg.role,
-            content: [{ text: msg.content }]
+            content: msg.content
         }));
 
         try {
             let response: string;
             if(isBuyerFlow){
-                response = await buyerChat({ history, message: input });
+                response = await buyerChat({ history: historyForAI, message: input });
             } else {
                 // Default to farmer chat for landing pages and farmer dashboard
-                response = await farmerChat({ history, message: input });
+                response = await farmerChat({ history: historyForAI, message: input });
             }
 
             const aiMessage: Message = { id: uuidv4(), role: 'model', content: response };

@@ -19,7 +19,7 @@ import { Part } from 'genkit';
 
 const MessageSchema = z.object({
   role: z.enum(['user', 'model']),
-  content: z.array(z.object({ text: z.string() })),
+  content: z.string(),
 });
 
 const BuyerChatInputSchema = z.object({
@@ -42,9 +42,14 @@ const buyerAssistantFlow = ai.defineFlow(
     outputSchema: BuyerChatOutputSchema,
   },
   async ({ history, message }) => {
+     const genkitHistory = history.map(msg => ({
+        role: msg.role,
+        content: [{ text: msg.content }]
+    }));
+
     const { text } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      history: history as Part[],
+      history: genkitHistory as Part[],
       prompt: {
         role: 'user',
         content: [{ text: message }],

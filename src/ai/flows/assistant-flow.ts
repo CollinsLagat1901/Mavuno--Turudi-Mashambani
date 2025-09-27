@@ -18,7 +18,7 @@ import { Part } from 'genkit';
 
 const MessageSchema = z.object({
   role: z.enum(['user', 'model']),
-  content: z.array(z.object({ text: z.string() })),
+  content: z.string(),
 });
 
 const ChatInputSchema = z.object({
@@ -34,26 +34,6 @@ export async function chat(input: ChatInput): Promise<ChatOutput> {
   return assistantFlow(input);
 }
 
-const assistantPrompt = ai.definePrompt({
-  name: 'assistantPrompt',
-  tools: [getUserDataTool],
-  input: { schema: z.object({ message: z.string() }) },
-  output: { format: 'text' },
-  prompt: `You are Mavuno Assistant, a friendly and expert AI advisor for Kenyan farmers.
-Your goal is to provide helpful, actionable, and personalized advice.
-
-- Use the tools available to you to fetch user data (like farm location, size, soil type) to tailor your recommendations. For example, if the user asks for the best crop, use the tool to get their location first.
-- If you don't have enough information, ask clarifying questions. For example: "To give you the best recommendation, I need to know your county. Can you please tell me which county your farm is in?"
-- Keep your answers concise, clear, and easy to understand for all farmers, regardless of their technical knowledge.
-- Your persona is knowledgeable, encouraging, and supportive. Your name is Mavuno.
-- When providing recommendations, explain your reasoning. For example, "I recommend maize because it is well-suited for the soil in Nakuru and current market prices are high."
-- You MUST answer in the same language as the user's query.
-
-Start the conversation now. The user has sent the following message:
-{{{message}}}
-`,
-});
-
 const assistantFlow = ai.defineFlow(
   {
     name: 'assistantFlow',
@@ -61,9 +41,15 @@ const assistantFlow = ai.defineFlow(
     outputSchema: ChatOutputSchema,
   },
   async ({ history, message }) => {
+    // Re-map the history from the client to the format Genkit expects.
+    const genkitHistory = history.map(msg => ({
+        role: msg.role,
+        content: [{ text: msg.content }]
+    }));
+
     const { text } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      history: history as Part[],
+      history: genkitHistory as Part[],
       prompt: {
         role: 'user',
         content: [{ text: message }],

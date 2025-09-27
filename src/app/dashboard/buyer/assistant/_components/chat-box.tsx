@@ -61,15 +61,15 @@ export default function ChatBox() {
     form.reset();
     
     // Prepare history for the AI flow
-    const history: Part[] = messages.map(msg => ({
+    const historyForAI: {role: 'user' | 'model', content: string}[] = messages.map(msg => ({
         role: msg.role,
-        content: [{ text: msg.content }]
+        content: msg.content
     }));
 
 
     try {
       const response = await buyerChat({
-        history,
+        history: historyForAI,
         message: input,
       });
 
