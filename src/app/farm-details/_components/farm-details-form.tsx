@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -131,6 +132,7 @@ export function FarmDetailsForm() {
           experience: values.experienceLevel,
           goal: values.mainGoal,
           challenges: values.challenges?.split(',').map(s => s.trim()).filter(Boolean),
+          role: 'farmer',
           farms: {
             farm1: {
               name: values.farmName,
@@ -481,3 +483,5 @@ export function FarmDetailsForm() {
     </Form>
   );
 }
+
+    
