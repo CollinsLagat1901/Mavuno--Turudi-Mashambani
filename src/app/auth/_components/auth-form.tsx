@@ -132,6 +132,8 @@ export function AuthForm() {
             router.push('/dashboard/buyer');
             break;
         case 'transporter':
+             router.push('/dashboard/transporter');
+            break;
         case 'government':
             toast({
                 title: 'Dashboard Coming Soon!',
