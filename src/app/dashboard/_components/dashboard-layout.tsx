@@ -18,6 +18,9 @@ import {
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
+import { useState, useEffect } from 'react';
+import { collection, query, where, onSnapshot, orderBy, limit, doc, updateDoc } from 'firebase/firestore';
+
 
 import {
   Avatar,
@@ -31,6 +34,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 import MavunoLogo from '@/components/icons/mavuno-logo';
 import {
@@ -45,8 +49,10 @@ import {
   SidebarInset,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/firebase-config';
+import { auth, db } from '@/lib/firebase-config';
 import { useToast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
 const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
@@ -59,6 +65,16 @@ const navLinks = [
   { href: '/dashboard/profile', label: 'Profile', icon: User },
 ];
 
+interface Notification {
+    id: string;
+    title: string;
+    message: string;
+    status: 'read' | 'unread';
+    type: string;
+    createdAt: any;
+}
+
+
 export default function DashboardLayout({
   children,
 }: {
@@ -67,6 +83,42 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { toast } = useToast();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+
+   useEffect(() => {
+    if (!auth.currentUser) return;
+
+    const q = query(
+      collection(db, 'notifications'),
+      where('userId', '==', auth.currentUser.uid),
+      orderBy('createdAt', 'desc'),
+      limit(50)
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const notifs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Notification));
+      setNotifications(notifs);
+      setUnreadCount(notifs.filter(n => n.status === 'unread').length);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleMarkAsRead = async (id: string) => {
+    const notifRef = doc(db, 'notifications', id);
+    await updateDoc(notifRef, { status: 'read' });
+  };
+  
+  const handleOpenNotifications = (open: boolean) => {
+      if(open && unreadCount > 0){
+          notifications.forEach(n => {
+              if(n.status === 'unread') handleMarkAsRead(n.id);
+          });
+      }
+  }
+
 
   const handleLogout = async () => {
     try {
@@ -156,10 +208,35 @@ export default function DashboardLayout({
                 <p className="text-sm text-muted-foreground hidden md:block">
                   <span className="font-semibold text-foreground">Powered by Entity AI</span>
                 </p>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <Bell className="h-5 w-5" />
-                  <span className="sr-only">Notifications</span>
-                </Button>
+                <DropdownMenu onOpenChange={handleOpenNotifications}>
+                    <DropdownMenuTrigger asChild>
+                       <Button variant="ghost" size="icon" className="rounded-full relative">
+                          <Bell className="h-5 w-5" />
+                          {unreadCount > 0 && (
+                            <Badge variant="destructive" className="absolute -top-1 -right-1 h-5 w-5 justify-center p-0">{unreadCount}</Badge>
+                          )}
+                          <span className="sr-only">Notifications</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-80">
+                        <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                          {notifications.length > 0 ? notifications.slice(0, 5).map(n => (
+                            <DropdownMenuItem key={n.id} className="flex flex-col items-start gap-1 whitespace-normal">
+                                <p className="font-semibold">{n.title}</p>
+                                <p className="text-xs text-muted-foreground">{n.message}</p>
+                            </DropdownMenuItem>
+                          )) : (
+                            <DropdownMenuItem disabled>No new notifications</DropdownMenuItem>
+                          )}
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="justify-center">
+                            View All
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 <UserNav />
               </div>
         </header>
@@ -173,5 +250,3 @@ export default function DashboardLayout({
     </SidebarProvider>
   );
 }
-
-    
