@@ -114,6 +114,8 @@ export function AuthForm() {
         } else {
             router.push('/farm-details');
         }
+      } else if (userData.role === 'buyer') {
+          router.push('/dashboard/buyer');
       } else {
         toast({
             title: 'Dashboard Coming Soon!',
@@ -141,12 +143,19 @@ export function AuthForm() {
         values.password
       );
       await saveUserToFirestore(user, values);
-      toast({
-        title: 'Account Created!',
-        description: 'Please complete your farm details.',
-      });
+      
       if (values.role === 'farmer') {
+         toast({
+            title: 'Account Created!',
+            description: 'Please complete your farm details.',
+        });
         router.push('/farm-details');
+      } else if (values.role === 'buyer') {
+        toast({
+            title: 'Account Created!',
+            description: 'Welcome to the Buyer Dashboard.',
+        });
+        router.push('/dashboard/buyer');
       } else {
         toast({
             title: 'Dashboard Coming Soon!',
@@ -169,7 +178,7 @@ export function AuthForm() {
     const userRef = doc(db, 'users', user.uid);
     await setDoc(userRef, {
       uid: user.uid,
-      name: data.fullName || user.displayName || 'Anonymous Farmer',
+      name: data.fullName || user.displayName || 'Anonymous User',
       email: user.email,
       phone: data.phone || user.phoneNumber || '',
       role: data.role || 'farmer',
@@ -182,7 +191,7 @@ export function AuthForm() {
           notifications: ['In-App'],
           ai_focus: ['Crop selection', 'Market insights'],
       },
-      farms: {}
+      ...(data.role === 'farmer' && { farms: {} })
     }, { merge: true });
   };
 
