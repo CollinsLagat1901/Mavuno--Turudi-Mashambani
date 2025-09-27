@@ -104,31 +104,46 @@ export function AuthForm() {
   });
 
   const handleSuccessfulAuth = async (user: User) => {
-    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    const userDocRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userDocRef);
     
     if (userDoc.exists()) {
       const userData = userDoc.data();
-      if (userData.role === 'farmer') {
-        if(userData.farms && Object.keys(userData.farms).length > 0) {
+      // Wait for user data to be created by Google Sign-In if it's a new user
+      if (!userData.role) {
+         await saveUserToFirestore(user, { role: 'farmer' }); // default role
+         router.push('/farm-details');
+         return;
+      }
+      
+      switch(userData.role) {
+        case 'farmer':
+          if (userData.farms && Object.keys(userData.farms).length > 0) {
             router.push('/dashboard');
-        } else {
+          } else {
             router.push('/farm-details');
-        }
-      } else if (userData.role === 'buyer') {
+          }
+          break;
+        case 'buyer':
           router.push('/dashboard/buyer');
-      } else {
-        toast({
+          break;
+        case 'transporter':
+        case 'government':
+          toast({
             title: 'Dashboard Coming Soon!',
             description: `The dashboard for the '${userData.role}' role is under construction. You will be redirected home for now.`,
-        });
-        router.push('/');
+          });
+          router.push('/');
+          break;
+        default:
+          router.push('/'); // Fallback to home
       }
     } else {
-      // New user from Google sign-in, default to farmer and go to details page.
+      // New user from Google sign-in. Default to farmer and go to details page.
       await saveUserToFirestore(user, {
             fullName: user.displayName,
             email: user.email,
-            role: 'farmer', // Default role for Google Sign-In
+            role: 'farmer',
         });
       router.push('/farm-details');
     }
@@ -144,25 +159,12 @@ export function AuthForm() {
       );
       await saveUserToFirestore(user, values);
       
-      if (values.role === 'farmer') {
-         toast({
-            title: 'Account Created!',
-            description: 'Please complete your farm details.',
-        });
-        router.push('/farm-details');
-      } else if (values.role === 'buyer') {
-        toast({
-            title: 'Account Created!',
-            description: 'Welcome to the Buyer Dashboard.',
-        });
-        router.push('/dashboard/buyer');
-      } else {
-        toast({
-            title: 'Dashboard Coming Soon!',
-            description: `The dashboard for the '${values.role}' role is under construction. You will be redirected home for now.`,
-        });
-        router.push('/');
-      }
+      toast({
+        title: 'Account Created!',
+        description: 'Redirecting you to the next step...',
+      });
+      await handleSuccessfulAuth(user);
+
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -176,15 +178,19 @@ export function AuthForm() {
 
   const saveUserToFirestore = async (user: User, data: Partial<SignUpValues>) => {
     const userRef = doc(db, 'users', user.uid);
-    await setDoc(userRef, {
+    const userDoc = await getDoc(userRef);
+
+    const dataToSave = {
       uid: user.uid,
-      name: data.fullName || user.displayName || 'Anonymous User',
-      email: user.email,
+      name: data.fullName || user.displayName || 'Anonymous',
+      email: data.email || user.email,
       phone: data.phone || user.phoneNumber || '',
-      role: data.role || 'farmer',
-      createdAt: serverTimestamp(),
+      role: data.role || 'farmer', // Default to farmer if not specified
       updatedAt: serverTimestamp(),
-    }, { merge: true });
+      ...(userDoc.exists() ? {} : { createdAt: serverTimestamp() }), // Only set createdAt on new document
+    };
+    
+    await setDoc(userRef, dataToSave, { merge: true });
   };
 
   const handleSignIn = async (values: SignInValues) => {
@@ -218,8 +224,7 @@ export function AuthForm() {
         description: `Welcome ${user.displayName || 'to Mavuno'}!`,
       });
       await handleSuccessfulAuth(user);
-    } catch (error: any)
-{
+    } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Google Sign-In Failed',
