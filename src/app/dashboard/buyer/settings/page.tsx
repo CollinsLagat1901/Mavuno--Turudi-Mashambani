@@ -1,4 +1,3 @@
-
 'use client';
 import { useState, useEffect } from 'react';
 import { auth, db } from '@/lib/firebase-config';
@@ -12,6 +11,7 @@ import SettingsHeader from '@/app/dashboard/settings/_components/settings-header
 import NotificationsSettings from '@/app/dashboard/settings/_components/notifications-settings';
 import AppearanceSettings from '@/app/dashboard/settings/_components/appearance-settings';
 import AccountManagement from '@/app/dashboard/settings/_components/account-management';
+import AiPersonalizationSettings from '@/app/dashboard/settings/_components/ai-personalization-settings';
 
 interface UserData {
     name?: string;
@@ -43,6 +43,7 @@ export default function BuyerSettingsPage() {
         <SettingsHeader />
         <Separator />
         <div className="mx-auto grid w-full max-w-3xl gap-6">
+          <AiPersonalizationSettings />
           <NotificationsSettings />
           <AppearanceSettings />
           <AccountManagement />
