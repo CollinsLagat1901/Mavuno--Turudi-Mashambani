@@ -36,7 +36,7 @@ const Footer = () => {
         <Separator className="my-8 bg-border" />
         <div className="flex flex-col-reverse items-center justify-between gap-4 md:flex-row">
             <p className="text-sm text-center">
-                © {new Date().getFullYear()} Mavuno Insights. All rights reserved.
+                Copyright © {new Date().getFullYear()} Mavuno AI. All Rights Reserved.
             </p>
             <div className="flex items-center gap-4">
                 {socialLinks.map((social) => (
