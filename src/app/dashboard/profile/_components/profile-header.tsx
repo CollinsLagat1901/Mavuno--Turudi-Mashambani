@@ -1,8 +1,9 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
+import { ReactNode } from 'react';
 
-export default function ProfileHeader() {
+export default function ProfileHeader({ children }: { children?: ReactNode }) {
   return (
     <div className="flex items-center justify-between">
       <div className="space-y-1">
@@ -11,10 +12,7 @@ export default function ProfileHeader() {
           Manage your personal details and farm information.
         </p>
       </div>
-      <Button disabled>
-        <Pencil className="mr-2" />
-        Edit Profile
-      </Button>
+      {children}
     </div>
   );
 }

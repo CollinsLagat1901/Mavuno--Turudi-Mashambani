@@ -1,4 +1,3 @@
-
 'use client';
 import { useState, useEffect } from 'react';
 import { auth, db } from '@/lib/firebase-config';
@@ -9,12 +8,13 @@ import BuyerDashboardLayout from '../_components/buyer-dashboard-layout';
 import { Separator } from '@/components/ui/separator';
 
 import ProfileHeader from '@/app/dashboard/profile/_components/profile-header'; // Re-usable
-import AccountSettings from '@/app/dashboard/profile/_components/account-settings'; // Re-usable
 
 // Buyer-specific components
 import BuyerInfo from './_components/buyer-info';
 import CompanyInfo from './_components/company-info';
 import SourcingPreferences from './_components/sourcing-preferences';
+import AccountSettings from '@/app/dashboard/profile/_components/account-settings'; // Re-usable
+import EditProfileDialog from './_components/edit-profile-dialog';
 
 interface UserData {
     name?: string;
@@ -41,10 +41,16 @@ export default function BuyerProfilePage() {
     return () => unsubscribe();
   }, []);
 
+  const handleProfileUpdate = (data: Partial<UserData>) => {
+    setUserData(prev => ({...prev, ...data}));
+  }
+
   return (
     <BuyerDashboardLayout user={user} userData={userData} loading={loading}>
       <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
-        <ProfileHeader />
+        <ProfileHeader>
+            <EditProfileDialog userData={userData} onProfileUpdate={handleProfileUpdate} />
+        </ProfileHeader>
         <Separator />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
