@@ -132,13 +132,14 @@ export default function BuyerDashboardLayout({
             <MavunoLogo />
           </SidebarHeader>
           <SidebarContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-2">
               {navLinks.map((link) => (
                 <SidebarMenuItem key={link.href}>
                   <SidebarMenuButton
                     asChild
                     isActive={pathname === link.href}
                     tooltip={link.label}
+                    size="lg"
                   >
                     <Link href={link.href}>
                       <link.icon />
