@@ -38,9 +38,9 @@ export default function CurrentPrices() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Current Market Prices</CardTitle>
+        <CardTitle>Crop Performance Leaderboard</CardTitle>
         <CardDescription>
-          Live prices from different markets. Search and filter to find the best opportunities.
+          Live prices and trends from different markets. Search and filter to find the best opportunities.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
