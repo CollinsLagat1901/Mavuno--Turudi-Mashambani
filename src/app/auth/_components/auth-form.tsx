@@ -106,46 +106,47 @@ export function AuthForm() {
   const handleSuccessfulAuth = async (user: User) => {
     const userDocRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userDocRef);
-    
-    if (userDoc.exists()) {
-      const userData = userDoc.data();
-      // Wait for user data to be created by Google Sign-In if it's a new user
-      if (!userData.role) {
-         await saveUserToFirestore(user, { role: 'farmer' }); // default role
-         router.push('/farm-details');
-         return;
-      }
-      
-      switch(userData.role) {
-        case 'farmer':
-          if (userData.farms && Object.keys(userData.farms).length > 0) {
-            router.push('/dashboard');
-          } else {
-            router.push('/farm-details');
-          }
-          break;
-        case 'buyer':
-          router.push('/dashboard/buyer');
-          break;
-        case 'transporter':
-        case 'government':
-          toast({
-            title: 'Dashboard Coming Soon!',
-            description: `The dashboard for the '${userData.role}' role is under construction. You will be redirected home for now.`,
-          });
-          router.push('/');
-          break;
-        default:
-          router.push('/'); // Fallback to home
-      }
-    } else {
-      // New user from Google sign-in. Default to farmer and go to details page.
-      await saveUserToFirestore(user, {
+    let userData = userDoc.exists() ? userDoc.data() : null;
+
+    // Handle new users (e.g., first time Google sign-in)
+    if (!userData || !userData.role) {
+        const defaultRole = 'farmer'; // Default new users to farmer
+        await saveUserToFirestore(user, {
             fullName: user.displayName,
             email: user.email,
-            role: 'farmer',
+            role: defaultRole,
         });
-      router.push('/farm-details');
+        userData = { ...(userData || {}), role: defaultRole };
+    }
+    
+    switch (userData.role) {
+        case 'farmer':
+            // If farmer has not filled in their farm details, redirect them
+            if (!userData.farms || Object.keys(userData.farms).length === 0) {
+                router.push('/farm-details');
+            } else {
+                router.push('/dashboard');
+            }
+            break;
+        case 'buyer':
+            router.push('/dashboard/buyer');
+            break;
+        case 'transporter':
+        case 'government':
+            toast({
+                title: 'Dashboard Coming Soon!',
+                description: `The dashboard for the '${userData.role}' role is under construction. You will be redirected home for now.`,
+            });
+            router.push('/');
+            break;
+        default:
+            // Fallback for any other case is to send to farm details setup
+            toast({
+                title: 'Complete Your Profile',
+                description: 'Please complete your profile to continue.',
+            });
+            router.push('/farm-details');
+            break;
     }
   }
 
