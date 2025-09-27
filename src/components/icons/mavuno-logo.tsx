@@ -22,7 +22,6 @@ const MavunoLogo = ({ showText = true, ...props }: MavunoLogoProps) => (
     >
         <path d="M2 22s10-3 10-10S2 2 2 2"/>
         <path d="M22 22s-10-3-10-10S22 2 22 2"/>
-        <path d="M12 2v20"/>
     </svg>
     {showText && <span className="text-xl font-bold text-current">Mavuno</span>}
   </div>
