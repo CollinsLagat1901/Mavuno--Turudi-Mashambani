@@ -46,7 +46,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const navLinks = [
   { href: '/dashboard/buyer', label: 'Home', icon: Home },
-  { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
+  { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/market', label: 'Market Analysis', icon: LineChart },
   { href: '/dashboard/profile', label: 'Profile', icon: UserIcon },
 ];
