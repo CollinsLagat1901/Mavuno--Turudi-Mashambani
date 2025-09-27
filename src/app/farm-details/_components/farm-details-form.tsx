@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -85,11 +84,11 @@ export function FarmDetailsForm() {
       subCounty: '',
       latitude: -0.3031,
       longitude: 36.0800,
-      soilType: 'Unknown',
+      soilType: 'Loamy',
       irrigationAccess: false,
       waterSource: 'Rain-fed',
       mainCrops: '',
-      farmingMethod: 'Conventional',
+      farmingMethod: 'Organic',
       mainGoal: 'Profit Maximization',
       challenges: '',
     },
@@ -112,7 +111,7 @@ export function FarmDetailsForm() {
 
       const userRef = doc(db, 'users', user.uid);
       
-      const mainCropsList = values.mainCrops?.split(',').map(s => s.trim()) || [];
+      const mainCropsList = values.mainCrops?.split(',').map(s => s.trim()).filter(Boolean) || [];
       const cropsData = mainCropsList.reduce((acc, cropName, index) => {
         acc[`crop${index + 1}`] = { 
             name: cropName,
@@ -131,7 +130,7 @@ export function FarmDetailsForm() {
           phone: values.phone,
           experience: values.experienceLevel,
           goal: values.mainGoal,
-          challenges: values.challenges?.split(',').map(s => s.trim()),
+          challenges: values.challenges?.split(',').map(s => s.trim()).filter(Boolean),
           farms: {
             farm1: {
               name: values.farmName,
@@ -482,5 +481,3 @@ export function FarmDetailsForm() {
     </Form>
   );
 }
-
-    
