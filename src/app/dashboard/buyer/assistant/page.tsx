@@ -1,5 +1,5 @@
 
-import BuyerDashboardLayout from '../../_components/buyer-dashboard-layout';
+import BuyerDashboardLayout from '../_components/buyer-dashboard-layout';
 import ChatBox from './_components/chat-box';
 
 
