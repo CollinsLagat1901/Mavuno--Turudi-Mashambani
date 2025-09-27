@@ -14,11 +14,13 @@ import CompanyInfo from './_components/company-info';
 import SourcingPreferences from './_components/sourcing-preferences';
 import AccountSettings from '@/app/dashboard/profile/_components/account-settings'; // Re-usable
 import EditProfileDialog from './_components/edit-profile-dialog';
+import VerificationStatus from './_components/verification-status';
 
 interface UserData {
     name?: string;
     phone?: string;
     email?: string;
+    kraPin?: string;
     companyInfo?: {
       name?: string;
       location?: string;
@@ -85,6 +87,7 @@ export default function BuyerProfilePage() {
                 <CompanyInfo userData={userData} loading={loading} />
             </div>
             <div className="lg:col-span-1 space-y-6">
+                <VerificationStatus />
                 <SourcingPreferences userData={userData} loading={loading} />
                 <AccountSettings />
             </div>

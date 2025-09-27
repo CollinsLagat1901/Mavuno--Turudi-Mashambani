@@ -1,8 +1,7 @@
-
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { User, Phone, Mail, Fingerprint, Award } from 'lucide-react';
+import { User, Phone, Mail, Fingerprint, Award, FileText } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface BuyerInfoProps {
@@ -11,6 +10,7 @@ interface BuyerInfoProps {
         phone?: string;
         email?: string;
         experience?: string;
+        kraPin?: string;
     } | null;
     loading: boolean;
 }
@@ -22,12 +22,14 @@ export default function BuyerInfo({ userData, loading }: BuyerInfoProps) {
         email: userData?.email || 'N/A',
         nationalId: '********',
         experience: userData?.experience || 'Lead Buyer, Fresh Produce Inc.',
+        kraPin: userData?.kraPin || 'Not provided',
     };
 
     const infoItems = [
         { icon: <User />, label: "Full Name", value: buyerData.fullName },
         { icon: <Phone />, label: "Phone Number", value: buyerData.phone },
         { icon: <Mail />, label: "Email", value: buyerData.email },
+        { icon: <FileText />, label: "KRA PIN / Business Reg. No.", value: buyerData.kraPin },
         { icon: <Fingerprint />, label: "National ID", value: buyerData.nationalId },
         { icon: <Award />, label: "Role/Title", value: buyerData.experience },
     ]

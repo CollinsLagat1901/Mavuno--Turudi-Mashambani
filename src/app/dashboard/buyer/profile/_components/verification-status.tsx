@@ -1,0 +1,39 @@
+
+'use client';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ShieldCheck, ShieldAlert, Upload } from 'lucide-react';
+
+export default function VerificationStatus() {
+  const isVerified = false; // This would be dynamic based on user data
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          {isVerified ? <ShieldCheck className="text-primary" /> : <ShieldAlert className="text-yellow-500" />}
+          Verification Status
+        </CardTitle>
+        <CardDescription>
+          Verify your identity to build trust with farmers.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4 text-center">
+        <Badge variant={isVerified ? 'default' : 'secondary'} className="text-lg py-1 px-4">
+          {isVerified ? 'Verified' : 'Pending Verification'}
+        </Badge>
+        <p className="text-sm text-muted-foreground">
+          {isVerified 
+            ? "Your account is verified. You have full access to the marketplace."
+            : "Please upload the required documents to get your verified badge."
+          }
+        </p>
+        <Button disabled className="w-full">
+            <Upload className="mr-2" />
+            Upload Documents
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}

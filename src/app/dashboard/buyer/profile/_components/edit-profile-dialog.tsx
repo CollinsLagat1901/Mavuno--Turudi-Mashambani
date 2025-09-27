@@ -46,6 +46,7 @@ import {
 const profileSchema = z.object({
   fullName: z.string().min(3, 'Full name must be at least 3 characters'),
   phone: z.string().min(10, 'Please enter a valid phone number'),
+  kraPin: z.string().optional(),
 
   // Company Info
   businessName: z.string().optional(),
@@ -76,6 +77,7 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
     defaultValues: {
         fullName: '',
         phone: '',
+        kraPin: '',
         businessName: '',
         companyLocation: '',
         website: '',
@@ -91,6 +93,7 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
       form.reset({
         fullName: userData.name || '',
         phone: userData.phone || '',
+        kraPin: userData.kraPin || '',
         businessName: userData.companyInfo?.name || '',
         companyLocation: userData.companyInfo?.location || '',
         website: userData.companyInfo?.website || '',
@@ -116,6 +119,7 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
         const dataToSave = {
             name: values.fullName,
             phone: values.phone,
+            kraPin: values.kraPin,
             companyInfo: {
                 name: values.businessName,
                 location: values.companyLocation,
@@ -191,6 +195,19 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
                                     <FormLabel>Phone Number</FormLabel>
                                     <FormControl>
                                         <Input placeholder="e.g., 0700111222" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="kraPin"
+                                render={({ field }) => (
+                                    <FormItem>
+                                    <FormLabel>KRA PIN / Business Reg. No.</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="e.g., A001234567Z" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                     </FormItem>
@@ -321,5 +338,3 @@ export default function EditProfileDialog({ userData, onProfileUpdate }: EditPro
     </Dialog>
   );
 }
-
-    
