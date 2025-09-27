@@ -1,12 +1,20 @@
-
 'use client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShieldCheck, ShieldAlert, Upload } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function VerificationStatus() {
   const isVerified = false; // This would be dynamic based on user data
+  const { toast } = useToast();
+
+  const handleUploadClick = () => {
+    toast({
+      title: 'Coming Soon!',
+      description: 'The document upload feature is currently under development.',
+    });
+  };
 
   return (
     <Card>
@@ -29,7 +37,7 @@ export default function VerificationStatus() {
             : "Please upload the required documents to get your verified badge."
           }
         </p>
-        <Button disabled className="w-full">
+        <Button onClick={handleUploadClick} className="w-full">
             <Upload className="mr-2" />
             Upload Documents
         </Button>
