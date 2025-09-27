@@ -20,8 +20,13 @@ const MavunoLogo = ({ showText = true, ...props }: MavunoLogoProps) => (
       className={cn('text-primary', props.className)}
       {...props}
     >
-        <path d="M2 22s10-3 10-10S2 2 2 2"/>
-        <path d="M22 22s-10-3-10-10S22 2 22 2"/>
+      <path d="M12 2v20" />
+      <path d="M12 12c-2-2.5-4.5-4-6-4" />
+      <path d="M12 12c2-2.5 4.5-4 6-4" />
+      <path d="M12 16c-2-2.5-4.5-4-6-4" />
+      <path d="M12 16c2-2.5 4.5-4 6-4" />
+      <path d="M14 10c-1 0-2 1-2 2s1 2 2 2" />
+      <path d="M10 14c1 0 2-1 2-2s-1-2-2-2" />
     </svg>
     {showText && <span className="text-xl font-bold text-current">Mavuno</span>}
   </div>
