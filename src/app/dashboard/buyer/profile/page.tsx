@@ -8,9 +8,7 @@ import { User } from 'firebase/auth';
 import BuyerDashboardLayout from '../_components/buyer-dashboard-layout';
 import { Separator } from '@/components/ui/separator';
 
-import ProfileHeader from '@/app/dashboard/profile/_components/profile-header'; // Re-usable
-
-// Buyer-specific components
+import ProfileHeader from './_components/profile-header';
 import BuyerInfo from './_components/buyer-info';
 import CompanyInfo from './_components/company-info';
 import SourcingPreferences from './_components/sourcing-preferences';
@@ -77,7 +75,7 @@ export default function BuyerProfilePage() {
   return (
     <BuyerDashboardLayout user={user} userData={userData} loading={loading}>
       <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
-        <ProfileHeader>
+        <ProfileHeader user={user} userData={userData} loading={loading}>
             <EditProfileDialog userData={userData} onProfileUpdate={handleProfileUpdate} />
         </ProfileHeader>
         <Separator />
@@ -95,5 +93,3 @@ export default function BuyerProfilePage() {
     </BuyerDashboardLayout>
   );
 }
-
-    
