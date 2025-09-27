@@ -1,7 +1,7 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, orderBy, getDoc, doc as firestoreDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase-config';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
@@ -26,6 +26,36 @@ interface Conversation {
     lastMessage: string;
 }
 
+const ConversationItem = ({ convo, activeChatId }: { convo: Conversation, activeChatId: string | null }) => {
+    const [formattedDate, setFormattedDate] = useState('');
+
+    useEffect(() => {
+        if (convo.lastUpdated) {
+            setFormattedDate(formatDistanceToNow(convo.lastUpdated.toDate(), { addSuffix: true }));
+        }
+    }, [convo.lastUpdated]);
+
+    return (
+        <Link href={`/dashboard/messages?chatId=${convo.id}`} className="block">
+            <div className={cn(
+                "flex items-center gap-4 p-3 hover:bg-muted/50 cursor-pointer border-b",
+                activeChatId === convo.id && 'bg-muted'
+                )}>
+                <Avatar className="h-12 w-12">
+                    <AvatarFallback>{convo.otherUser?.name?.substring(0, 2).toUpperCase() || 'U'}</AvatarFallback>
+                </Avatar>
+                <div className="flex-1 truncate">
+                    <p className="font-semibold">{convo.otherUser?.name || 'User'}</p>
+                    <p className="text-sm text-muted-foreground truncate">{convo.lastMessage}</p>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                    {formattedDate}
+                </div>
+            </div>
+        </Link>
+    )
+}
+
 export default function ConversationList() {
     const [conversations, setConversations] = useState<Conversation[]>([]);
     const [loading, setLoading] = useState(true);
@@ -43,7 +73,6 @@ export default function ConversationList() {
         );
 
         const unsubscribe = onSnapshot(q, async (querySnapshot) => {
-            const convos: any[] = [];
             const userPromises: Promise<any>[] = [];
 
             querySnapshot.forEach(doc => {
@@ -51,7 +80,7 @@ export default function ConversationList() {
                 const otherUserId = data.participants.find((p: string) => p !== currentUser.uid);
 
                 if (otherUserId) {
-                    const userPromise = getDoc(doc(db, 'users', otherUserId)).then(userDoc => {
+                    const userPromise = getDoc(firestoreDoc(db, 'users', otherUserId)).then(userDoc => {
                         return {
                             id: doc.id,
                             ...data,
@@ -103,23 +132,7 @@ export default function ConversationList() {
                         <p className="p-4 text-center text-muted-foreground">No conversations yet.</p>
                     ) : (
                         conversations.map(convo => (
-                             <Link key={convo.id} href={`/dashboard/messages?chatId=${convo.id}`} className="block">
-                                <div className={cn(
-                                    "flex items-center gap-4 p-3 hover:bg-muted/50 cursor-pointer border-b",
-                                    activeChatId === convo.id && 'bg-muted'
-                                    )}>
-                                    <Avatar className="h-12 w-12">
-                                        <AvatarFallback>{convo.otherUser?.name?.substring(0, 2).toUpperCase() || 'U'}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-1 truncate">
-                                        <p className="font-semibold">{convo.otherUser?.name || 'User'}</p>
-                                        <p className="text-sm text-muted-foreground truncate">{convo.lastMessage}</p>
-                                    </div>
-                                    <div className="text-xs text-muted-foreground">
-                                        {convo.lastUpdated && formatDistanceToNow(convo.lastUpdated.toDate(), { addSuffix: true })}
-                                    </div>
-                                </div>
-                            </Link>
+                            <ConversationItem key={convo.id} convo={convo} activeChatId={activeChatId} />
                         ))
                     )}
                 </ScrollArea>
