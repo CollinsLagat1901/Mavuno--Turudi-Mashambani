@@ -75,7 +75,7 @@ export default function FloatingChat() {
             if(isBuyerFlow){
                 response = await buyerChat({ history, message: input });
             } else {
-                // Default to farmer chat for now
+                // Default to farmer chat for landing pages and farmer dashboard
                 response = await farmerChat({ history, message: input });
             }
 
