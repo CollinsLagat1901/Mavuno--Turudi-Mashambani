@@ -26,15 +26,19 @@ interface Conversation {
     lastMessage: string;
 }
 
-const ConversationItem = ({ convo, activeChatId }: { convo: Conversation, activeChatId: string | null }) => {
+const FormattedDate = ({ date }: { date: any }) => {
     const [formattedDate, setFormattedDate] = useState('');
 
     useEffect(() => {
-        if (convo.lastUpdated) {
-            setFormattedDate(formatDistanceToNow(convo.lastUpdated.toDate(), { addSuffix: true }));
+        if (date) {
+            setFormattedDate(formatDistanceToNow(date.toDate(), { addSuffix: true }));
         }
-    }, [convo.lastUpdated]);
+    }, [date]);
 
+    return <>{formattedDate}</>;
+};
+
+const ConversationItem = ({ convo, activeChatId }: { convo: Conversation, activeChatId: string | null }) => {
     return (
         <Link href={`/dashboard/messages?chatId=${convo.id}`} className="block">
             <div className={cn(
@@ -49,7 +53,7 @@ const ConversationItem = ({ convo, activeChatId }: { convo: Conversation, active
                     <p className="text-sm text-muted-foreground truncate">{convo.lastMessage}</p>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                    {formattedDate}
+                    {convo.lastUpdated && <FormattedDate date={convo.lastUpdated} />}
                 </div>
             </div>
         </Link>
