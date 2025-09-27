@@ -49,6 +49,7 @@ const navLinks = [
   { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/buyer/market', label: 'Market Analysis', icon: LineChart },
   { href: '/dashboard/buyer/profile', label: 'Profile', icon: UserIcon },
+  { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ];
 
 interface UserData {
