@@ -18,7 +18,20 @@ import EditProfileDialog from './_components/edit-profile-dialog';
 
 interface UserData {
     name?: string;
-    // Add other user data fields as needed
+    phone?: string;
+    email?: string;
+    companyInfo?: {
+      name?: string;
+      location?: string;
+      website?: string;
+      type?: string;
+    };
+    sourcingPreferences?: {
+        preferredCrops?: string[];
+        targetRegions?: string[];
+        qualityTier?: string;
+        notifications?: string;
+    }
 }
 
 export default function BuyerProfilePage() {
@@ -26,14 +39,18 @@ export default function BuyerProfilePage() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const fetchUserData = async (currentUser: User) => {
+    const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+    if (userDoc.exists()) {
+      setUserData(userDoc.data() as UserData);
+    }
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-        if (userDoc.exists()) {
-          setUserData(userDoc.data() as UserData);
-        }
+        await fetchUserData(currentUser);
       }
       setLoading(false);
     });
@@ -42,7 +59,11 @@ export default function BuyerProfilePage() {
   }, []);
 
   const handleProfileUpdate = (data: Partial<UserData>) => {
-    setUserData(prev => ({...prev, ...data}));
+    // This function optimistically updates the UI.
+    // A more robust solution might refetch the data.
+     if (user) {
+      fetchUserData(user);
+    }
   }
 
   return (
@@ -54,11 +75,11 @@ export default function BuyerProfilePage() {
         <Separator />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
-                <BuyerInfo />
-                <CompanyInfo />
+                <BuyerInfo userData={userData} loading={loading} />
+                <CompanyInfo userData={userData} loading={loading} />
             </div>
             <div className="lg:col-span-1 space-y-6">
-                <SourcingPreferences />
+                <SourcingPreferences userData={userData} loading={loading} />
                 <AccountSettings />
             </div>
         </div>
