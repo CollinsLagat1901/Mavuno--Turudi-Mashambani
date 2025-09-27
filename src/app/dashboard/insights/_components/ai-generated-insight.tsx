@@ -12,7 +12,7 @@ import {
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Wand2, Lightbulb, TrendingUp, Users, DollarSign, CheckCircle } from 'lucide-react';
+import { Loader2, Wand2, Lightbulb, TrendingUp, Users, DollarSign, CheckCircle, TestTube, AlertTriangle, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
@@ -140,40 +140,74 @@ export default function AIGeneratedInsight({ submission, loading, userId }: AIGe
                     Analysis complete! Here is the custom report for your farm based on your latest submission.
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6 p-6">
+                
+                {/* Recommended Crops */}
                 <div>
-                    <h4 className="font-semibold text-sm mb-2 flex items-center gap-2"><CheckCircle className="text-green-500" /> Top Recommended Crops</h4>
-                    <div className="flex gap-2">
-                        {insight.recommendedCrops.map(crop => <Badge key={crop}>{crop}</Badge>)}
+                    <h4 className="font-semibold text-lg mb-3 flex items-center gap-2"><TrendingUp /> Top 3 Recommended Crops</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {insight.recommendedCrops.map((crop, index) => (
+                            <Card key={index} className="bg-background">
+                                <CardHeader>
+                                    <CardTitle className="text-base">{crop.cropName}</CardTitle>
+                                    <CardDescription>Est. Profit: <span className="font-bold text-primary">KES {crop.expectedProfit.toLocaleString()}</span></CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-xs text-muted-foreground">{crop.reasoning}</p>
+                                </CardContent>
+                            </Card>
+                        ))}
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="p-3 rounded-lg bg-background/50">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground"><TrendingUp /> Profitability</div>
-                        <p className="text-xl font-bold text-primary">{(insight.profitabilityScore * 100).toFixed(0)}%</p>
+                <Separator />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Soil & Weather */}
+                    <div className="space-y-4">
+                         <div>
+                            <h4 className="font-semibold text-md mb-2 flex items-center gap-2"><TestTube /> Soil Recommendation</h4>
+                            <p className="text-sm">{insight.soilRecommendation}</p>
+                        </div>
+                        <div>
+                            <h4 className="font-semibold text-md mb-2 flex items-center gap-2"><Calendar /> Weather & Planting Summary</h4>
+                            <p className="text-sm">{insight.weatherSummary}</p>
+                        </div>
                     </div>
-                    <div className="p-3 rounded-lg bg-background/50">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground"><DollarSign /> Expected Yield</div>
-                        <p className="text-xl font-bold">{insight.expectedYield}</p>
+                     {/* Risks */}
+                    <div className="space-y-4">
+                         <div>
+                            <h4 className="font-semibold text-md mb-2 flex items-center gap-2"><AlertTriangle /> Disease & Risk Warnings</h4>
+                            <div className="space-y-2">
+                            {insight.diseaseWarnings.map((warning, index) => (
+                                <div key={index} className="text-sm p-2 bg-background rounded-md">
+                                    <div className="flex justify-between items-center">
+                                       <span className="font-medium">{warning.disease}</span>
+                                       <Badge variant={warning.probability === 'high' ? 'destructive' : 'secondary'}>{warning.probability}</Badge>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground mt-1">Prevention: {warning.prevention}</p>
+                                </div>
+                            ))}
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <Separator />
 
+                {/* Next Steps */}
                 <div>
-                    <h4 className="font-semibold text-sm mb-2 flex items-center gap-2"><Users /> Suggested Buyers</h4>
-                    <ul className="space-y-1 text-sm">
-                        {insight.suggestedBuyers.map(buyer => (
-                            <li key={buyer.name} className="flex justify-between">
-                                <span>{buyer.name} ({buyer.location})</span>
-                                <span className="font-mono text-muted-foreground">{buyer.contact}</span>
+                     <h4 className="font-semibold text-lg mb-3 flex items-center gap-2"><CheckCircle className="text-green-500"/> Actionable Next Steps</h4>
+                     <ul className="space-y-2">
+                        {insight.nextSteps.map((step, index) => (
+                            <li key={index} className="flex items-start gap-3">
+                                <div className="flex size-5 shrink-0 items-center justify-center rounded-full bg-green-100 mt-0.5">
+                                    <CheckCircle className="h-3 w-3 text-green-600" />
+                                </div>
+                                <span className="text-sm">{step}</span>
                             </li>
                         ))}
-                    </ul>
-                </div>
-                <Separator />
-                <div>
-                     <h4 className="font-semibold text-sm mb-2">Entity AI's Advice</h4>
-                    <p className="text-sm text-foreground/90">{insight.advice}</p>
+                     </ul>
                 </div>
             </CardContent>
         </Card>
