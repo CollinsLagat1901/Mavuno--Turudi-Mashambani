@@ -15,7 +15,6 @@ import { formatDistanceToNow } from 'date-fns';
 interface User {
     id: string;
     name?: string;
-    // other user fields
 }
 
 interface Conversation {
@@ -27,7 +26,7 @@ interface Conversation {
 }
 
 const FormattedDate = ({ date }: { date: any }) => {
-    const [formattedDate, setFormattedDate] = useState('');
+    const [formattedDate, setFormattedDate] = useState<string | null>(null);
 
     useEffect(() => {
         if (date?.toDate) {
@@ -71,8 +70,6 @@ export default function ConversationList() {
 
     useEffect(() => {
         if (!currentUser) {
-            // If user is not logged in, we shouldn't attempt to fetch conversations.
-            // We can listen for auth changes higher up, but for this component, let's just stop.
             setLoading(false);
             return;
         }

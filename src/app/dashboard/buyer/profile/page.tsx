@@ -2,7 +2,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { auth, db } from '@/lib/firebase-config';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 
 import BuyerDashboardLayout from '../_components/buyer-dashboard-layout';
@@ -40,38 +40,31 @@ export default function BuyerProfilePage() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchUserData = async (currentUser: User) => {
-     if (!currentUser) return;
-    const userDocRef = doc(db, 'users', currentUser.uid);
-    const unsubscribe = onSnapshot(userDocRef, (doc) => {
-        if (doc.exists()) {
-            setUserData(doc.data() as UserData);
-        }
-        setLoading(false);
-    });
-    return unsubscribe;
-  }
-
   useEffect(() => {
-    const authUnsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+    const authUnsubscribe = auth.onAuthStateChanged(currentUser => {
       setLoading(true);
       if (currentUser) {
         setUser(currentUser);
-        fetchUserData(currentUser);
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const dataUnsubscribe = onSnapshot(userDocRef, (doc) => {
+          if (doc.exists()) {
+            setUserData(doc.data() as UserData);
+          }
+          setLoading(false);
+        });
+        return () => dataUnsubscribe();
       } else {
         setUser(null);
         setUserData(null);
         setLoading(false);
       }
     });
-
+    
     return () => authUnsubscribe();
   }, []);
 
   const handleProfileUpdate = (data: Partial<UserData>) => {
-    // Optimistically update the UI
     setUserData(prevData => ({ ...prevData, ...data }));
-    // Refetching is handled by onSnapshot
   }
 
   return (
