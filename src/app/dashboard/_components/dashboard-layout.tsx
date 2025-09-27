@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -119,7 +120,7 @@ export default function DashboardLayout({
     <SidebarProvider>
         <Sidebar collapsible="icon" side="left" variant="sidebar">
           <SidebarHeader>
-            <MavunoLogo showText={false} />
+            <MavunoLogo />
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
