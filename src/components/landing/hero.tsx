@@ -36,7 +36,7 @@ const Hero = () => {
               <Link href="/auth">Get Started</Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
-              <Link href="#">Watch Demo</Link>
+              <Link href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch Demo</Link>
             </Button>
           </div>
         </div>
