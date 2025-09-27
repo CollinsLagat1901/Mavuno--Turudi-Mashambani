@@ -1,3 +1,4 @@
+
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,7 @@ const Header = () => {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'How It Works', href: '/how-it-works' },
+    { name: 'Impact', href: '/impact' },
     { name: 'Contact', href: '/contact' },
   ];
 
