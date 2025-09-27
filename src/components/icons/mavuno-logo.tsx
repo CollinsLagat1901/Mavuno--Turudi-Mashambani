@@ -1,7 +1,11 @@
 import type { SVGProps } from 'react';
 import { cn } from '@/lib/utils';
 
-const MavunoLogo = (props: SVGProps<SVGSVGElement>) => (
+interface MavunoLogoProps extends SVGProps<SVGSVGElement> {
+    showText?: boolean;
+}
+
+const MavunoLogo = ({ showText = true, ...props }: MavunoLogoProps) => (
   <div className="flex items-center gap-2">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +25,7 @@ const MavunoLogo = (props: SVGProps<SVGSVGElement>) => (
       <path d="M9.45 16L6.5 4" />
       <path d="M14.55 16l2.95-12" />
     </svg>
-    <span className="text-xl font-bold text-current">Mavuno</span>
+    {showText && <span className="text-xl font-bold text-current">Mavuno</span>}
   </div>
 );
 

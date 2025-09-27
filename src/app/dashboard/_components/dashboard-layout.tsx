@@ -119,7 +119,7 @@ export default function DashboardLayout({
     <SidebarProvider>
         <Sidebar collapsible="icon" side="left" variant="sidebar">
           <SidebarHeader>
-            <MavunoLogo />
+            <MavunoLogo showText={false} />
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
