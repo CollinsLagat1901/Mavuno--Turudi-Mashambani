@@ -2,24 +2,25 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Users can only read and write their own data
+    
+    // Users can only read and write their own data.
     match /users/{userId} {
       allow read, update, delete: if request.auth != null && request.auth.uid == userId;
       allow create: if request.auth != null;
     }
-
-    // A user can create a submission for themselves
+    
+    // Users can create their own submissions.
+    // Users can only read their own submissions.
     match /farmerSubmissions/{submissionId} {
-        allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
-        allow read, update: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read: if request.auth != null && get(/databases/$(database)/documents/farmerSubmissions/$(submissionId)).data.userId == request.auth.uid;
     }
 
-    // A user can only read insights that belong to them
+    // Users can create their own insights document (this would be done via a trusted server/function).
+    // Users can only read their own insights.
     match /aiInsights/{insightId} {
-      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
-       // Creating insights should ideally be done via a trusted server/cloud function
-      allow create: if request.auth != null; // For now, allow creation by authenticated user
+       allow create: if request.auth != null; // Ideally restricted to server role
+       allow read: if request.auth != null && get(/databases/$(database)/documents/aiInsights/$(insightId)).data.userId == request.auth.uid;
     }
   }
 }

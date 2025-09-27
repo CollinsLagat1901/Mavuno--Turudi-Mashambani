@@ -12,7 +12,7 @@ import {
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Wand2, Lightbulb, TrendingUp, Users, DollarSign, CheckCircle, TestTube, AlertTriangle, Calendar } from 'lucide-react';
+import { Loader2, Wand2, Lightbulb, TrendingUp, DollarSign, CheckCircle, TestTube, AlertTriangle, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
@@ -74,6 +74,9 @@ export default function AIGeneratedInsight({ submission, loading, userId }: AIGe
       };
 
       const result = await generateInsights(flowInput);
+      if(!result){
+          throw new Error("AI failed to generate insights. The response was empty.");
+      }
 
       // Save the new insight to Firestore
       const insightRef = await addDoc(collection(db, 'aiInsights'), {
@@ -133,12 +136,24 @@ export default function AIGeneratedInsight({ submission, loading, userId }: AIGe
     return (
         <Card className="bg-primary/5 border-primary/20">
             <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-primary">
-                    <Lightbulb /> Your Personal AI-Generated Insight
-                </CardTitle>
-                <CardDescription>
-                    Analysis complete! Here is the custom report for your farm based on your latest submission.
-                </CardDescription>
+                <div className="flex justify-between items-center">
+                    <div className="space-y-1">
+                        <CardTitle className="flex items-center gap-2 text-primary">
+                            <Lightbulb /> Your Personal AI-Generated Insight
+                        </CardTitle>
+                        <CardDescription>
+                            Analysis complete! Here is the custom report for your farm based on your latest submission.
+                        </CardDescription>
+                    </div>
+                     <Button onClick={handleGenerateInsight} disabled={isGenerating} size="sm">
+                        {isGenerating ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                            <Wand2 className="mr-2 h-4 w-4" />
+                        )}
+                        Re-analyze
+                    </Button>
+                </div>
             </CardHeader>
             <CardContent className="space-y-6 p-6">
                 
@@ -180,10 +195,12 @@ export default function AIGeneratedInsight({ submission, loading, userId }: AIGe
                             <h4 className="font-semibold text-md mb-2 flex items-center gap-2"><AlertTriangle /> Disease & Risk Warnings</h4>
                             <div className="space-y-2">
                             {insight.diseaseWarnings.map((warning, index) => (
-                                <div key={index} className="text-sm p-2 bg-background rounded-md">
+                                <div key={index} className="text-sm p-2 bg-background rounded-md border">
                                     <div className="flex justify-between items-center">
                                        <span className="font-medium">{warning.disease}</span>
-                                       <Badge variant={warning.probability === 'high' ? 'destructive' : 'secondary'}>{warning.probability}</Badge>
+                                       <Badge variant={warning.probability === 'high' ? 'destructive' : warning.probability === 'medium' ? 'secondary' : 'default'} className="bg-opacity-80">
+                                            {warning.probability}
+                                       </Badge>
                                     </div>
                                     <p className="text-xs text-muted-foreground mt-1">Prevention: {warning.prevention}</p>
                                 </div>
