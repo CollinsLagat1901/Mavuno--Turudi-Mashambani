@@ -10,6 +10,7 @@ import BuyerProductListings from './market/_components/buyer-product-listings';
 import BuyerMarketOverview from './market/_components/buyer-market-overview';
 import BuyerFarmerConnections from './market/_components/buyer-farmer-connections';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface UserData {
     name?: string;
@@ -28,6 +29,9 @@ export default function BuyerDashboardPage() {
         if (userDoc.exists()) {
           setUserData(userDoc.data() as UserData);
         }
+      } else {
+        setUser(null);
+        setUserData(null);
       }
       setLoading(false);
     });
@@ -39,9 +43,13 @@ export default function BuyerDashboardPage() {
     <BuyerDashboardLayout user={user} userData={userData} loading={loading}>
       <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-primary">
-            Welcome, {loading ? '...' : userData?.name || 'Buyer'} 🛒
+           {loading ? (
+             <Skeleton className="h-9 w-1/2" />
+           ) : (
+            <h1 className="text-3xl font-bold tracking-tight text-primary">
+                Welcome, {userData?.name || 'Buyer'} 🛒
             </h1>
+           )}
           <p className="text-muted-foreground">
             Discover produce, connect with farmers, and manage your purchases.
           </p>

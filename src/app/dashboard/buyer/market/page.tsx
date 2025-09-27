@@ -28,6 +28,9 @@ export default function BuyerMarketPage() {
         if (userDoc.exists()) {
           setUserData(userDoc.data() as UserData);
         }
+      } else {
+        setUser(null);
+        setUserData(null);
       }
       setLoading(false);
     });

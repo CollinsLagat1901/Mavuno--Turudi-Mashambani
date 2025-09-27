@@ -1,3 +1,4 @@
+
 'use client';
 import { useState, useEffect } from 'react';
 import { auth, db } from '@/lib/firebase-config';
@@ -30,6 +31,9 @@ export default function BuyerSettingsPage() {
         if (userDoc.exists()) {
           setUserData(userDoc.data() as UserData);
         }
+      } else {
+        setUser(null);
+        setUserData(null);
       }
       setLoading(false);
     });

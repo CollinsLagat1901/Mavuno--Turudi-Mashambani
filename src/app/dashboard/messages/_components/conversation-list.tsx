@@ -34,6 +34,8 @@ const FormattedDate = ({ date }: { date: any }) => {
         }
     }, [date]);
 
+    if (!formattedDate) return null;
+
     return <>{formattedDate}</>;
 };
 
@@ -52,7 +54,7 @@ const ConversationItem = ({ convo, activeChatId }: { convo: Conversation, active
                     <p className="text-sm text-muted-foreground truncate">{convo.lastMessage}</p>
                 </div>
                 <div className="text-xs text-muted-foreground">
-                    {convo.lastUpdated && <FormattedDate date={convo.lastUpdated} />}
+                    <FormattedDate date={convo.lastUpdated} />
                 </div>
             </div>
         </Link>
@@ -67,7 +69,12 @@ export default function ConversationList() {
     const activeChatId = searchParams.get('chatId');
 
     useEffect(() => {
-        if (!currentUser) return;
+        if (!currentUser) {
+            // If user is not logged in, we shouldn't attempt to fetch conversations.
+            // We can listen for auth changes higher up, but for this component, let's just stop.
+            setLoading(false);
+            return;
+        }
 
         const q = query(
             collection(db, 'chats'),
