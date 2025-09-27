@@ -1,50 +1,51 @@
+
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Bot, Bell, MessageSquare } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const goalsData = {
-    mainGoal: "Profit Maximization",
-    aiFocus: ["Crop Selection", "Market Insights"],
-    notifications: "In-App Only",
-    adviceType: "Weekly Summary"
+interface GoalsPreferencesProps {
+  userData: {
+    goal?: string;
+    preferences?: {
+      ai_focus?: string[];
+      notifications?: string[];
+    };
+  } | null;
+  loading: boolean;
 }
 
-export default function GoalsPreferences() {
+export default function GoalsPreferences({ userData, loading }: GoalsPreferencesProps) {
+  const goalsData = {
+    mainGoal: userData?.goal || "Not set",
+    aiFocus: userData?.preferences?.ai_focus?.join(', ') || "Not set",
+    notifications: userData?.preferences?.notifications?.join(', ') || "Not set",
+    adviceType: "Weekly Summary" // This can be a new field in preferences
+  };
+
+  const preferenceItems = [
+      { icon: <Target />, label: "Main Farming Goal", value: goalsData.mainGoal },
+      { icon: <Bot />, label: "AI Focus Areas", value: goalsData.aiFocus },
+      { icon: <Bell />, label: "Notifications", value: goalsData.notifications },
+      { icon: <MessageSquare />, label: "Preferred Advice Type", value: goalsData.adviceType },
+  ]
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Goals & Preferences</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-start gap-3">
-            <Target className="text-primary w-5 mt-1"/>
-            <div>
-                <p className="text-sm text-muted-foreground">Main Farming Goal</p>
-                <p className="font-medium">{goalsData.mainGoal}</p>
+        {preferenceItems.map(item => (
+            <div key={item.label} className="flex items-start gap-3">
+                <div className="text-primary w-5 mt-1 flex-shrink-0">{item.icon}</div>
+                <div>
+                    <p className="text-sm text-muted-foreground">{item.label}</p>
+                    {loading ? <Skeleton className="h-5 w-32 mt-1" /> : <p className="font-medium">{item.value}</p>}
+                </div>
             </div>
-        </div>
-        <div className="flex items-start gap-3">
-            <Bot className="text-primary w-5 mt-1"/>
-            <div>
-                <p className="text-sm text-muted-foreground">AI Focus Areas</p>
-                <p className="font-medium">{goalsData.aiFocus.join(', ')}</p>
-            </div>
-        </div>
-        <div className="flex items-start gap-3">
-            <Bell className="text-primary w-5 mt-1"/>
-            <div>
-                <p className="text-sm text-muted-foreground">Notifications</p>
-                <p className="font-medium">{goalsData.notifications}</p>
-            </div>
-        </div>
-         <div className="flex items-start gap-3">
-            <MessageSquare className="text-primary w-5 mt-1"/>
-            <div>
-                <p className="text-sm text-muted-foreground">Preferred Advice Type</p>
-                <p className="font-medium">{goalsData.adviceType}</p>
-            </div>
-        </div>
+        ))}
       </CardContent>
     </Card>
   );

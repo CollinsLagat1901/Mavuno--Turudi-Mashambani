@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,14 +11,30 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Loader2 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const crops = [
-  { crop: 'Maize', stage: 'Growing', season: 'Long Rains', method: 'Conventional', yield: '25 bags' },
-  { crop: 'Beans', stage: 'Planting', season: 'Short Rains', method: 'Organic', yield: '10 bags' },
-];
 
-export default function CropInfo() {
+interface FarmData {
+     crops?: {
+        [key: string]: {
+            name?: string;
+            stage?: string;
+            season?: string;
+            method?: string;
+            expectedYield?: number | string;
+        }
+    }
+}
+
+interface CropInfoProps {
+    farmData: FarmData | null | undefined;
+    loading: boolean;
+}
+
+export default function CropInfo({ farmData, loading }: CropInfoProps) {
+  const crops = farmData?.crops ? Object.values(farmData.crops) : [];
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -40,15 +57,31 @@ export default function CropInfo() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {crops.map((item) => (
-                <TableRow key={item.crop}>
-                    <TableCell className="font-medium">{item.crop}</TableCell>
-                    <TableCell>{item.stage}</TableCell>
-                    <TableCell>{item.season}</TableCell>
-                    <TableCell>{item.method}</TableCell>
-                    <TableCell>{item.yield}</TableCell>
-                </TableRow>
-                ))}
+                {loading ? (
+                    <TableRow>
+                        <TableCell colSpan={5} className="h-24 text-center">
+                            <div className="flex justify-center items-center">
+                                <Loader2 className="mr-2 h-6 w-6 animate-spin" /> Loading crops...
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                ) : crops.length > 0 ? (
+                    crops.map((item, index) => (
+                    <TableRow key={index}>
+                        <TableCell className="font-medium">{item.name || 'N/A'}</TableCell>
+                        <TableCell>{item.stage || 'N/A'}</TableCell>
+                        <TableCell>{item.season || 'N/A'}</TableCell>
+                        <TableCell>{item.method || 'N/A'}</TableCell>
+                        <TableCell>{String(item.expectedYield) || 'N/A'}</TableCell>
+                    </TableRow>
+                    ))
+                ) : (
+                     <TableRow>
+                        <TableCell colSpan={5} className="h-24 text-center">
+                            No crops added yet.
+                        </TableCell>
+                    </TableRow>
+                )}
             </TableBody>
             </Table>
         </div>
