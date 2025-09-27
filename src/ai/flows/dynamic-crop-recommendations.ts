@@ -31,12 +31,12 @@ const DynamicCropRecommendationsOutputSchema = z.object({
   recommendedCrops: z
     .string()
     .describe(
-      'A list of recommended crops for the farmer, based on their location, market data, and profit optimization.'
+      'A list of the top 3 recommended crops for the farmer, comma-separated, based on their location, market data, and profit optimization. Example: "Maize, Beans, Potatoes"'
     ),
   reasoning: z
     .string()
     .describe(
-      'The reasoning behind the crop recommendations, including market trends and profit analysis.'
+      'A concise, one-sentence reasoning for the top recommendation. Example: "Maize is prioritized due to strong market demand in Nakuru and its suitability for your farm\'s conditions."'
     ),
 });
 export type DynamicCropRecommendationsOutput = z.infer<
@@ -55,16 +55,22 @@ const prompt = ai.definePrompt({
   output: {schema: DynamicCropRecommendationsOutputSchema},
   prompt: `You are an AI assistant that provides crop recommendations to Kenyan farmers.
 
-  Based on the farmer's location (county), desired crops, and any additional details they provide, you will recommend the optimal crops to grow for maximum profitability.
+  Your task is to analyze a list of potential crops and recommend the top 3 for maximum profitability, based on the farmer's location and other details.
 
-  Consider real-time market data, regional suitability, and profit optimization when making your recommendations.
+  **Farmer's Information:**
+  - County: {{{county}}}
+  - Crops to consider: {{{crops}}}
+  - Additional Details: {{{additionalDetails}}}
 
-  County: {{{county}}}
-  Crops: {{{crops}}}
-  Additional Details: {{{additionalDetails}}}
+  **Your Analysis Must Consider:**
+  1.  **Profitability:** Prioritize crops with the highest current market price and demand in the specified county.
+  2.  **Suitability:** Factor in general suitability for the region (e.g., potatoes in Nyandarua, maize in the Rift Valley).
+  3.  **Farmer's Context:** Use any additional details provided.
 
-  Provide a clear and concise list of recommended crops, along with a detailed explanation of your reasoning.
-  The reasoning should be detailed and include market trends and profit analysis.`,
+  **Instructions:**
+  1.  From the list of 'Crops to consider', select and rank the top 3 most profitable and suitable crops.
+  2.  Format the output strictly as a comma-separated list in the 'recommendedCrops' field (e.g., "Maize, Potatoes, Beans").
+  3.  Provide a single, clear sentence in the 'reasoning' field explaining why the #1 crop was chosen, mentioning either a market or suitability factor.`,
 });
 
 const dynamicCropRecommendationsFlow = ai.defineFlow(
