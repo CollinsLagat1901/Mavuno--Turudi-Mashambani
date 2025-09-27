@@ -13,6 +13,7 @@ import {
   User,
   BookUser,
   MessageCircle,
+  MessageSquare,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
@@ -51,6 +52,7 @@ const navLinks = [
   { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/insights', label: 'Insights', icon: LineChart },
   { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
+  { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
   { href: '/farm-details', label: 'Farmer Details', icon: BookUser },
   { href: '/dashboard/profile', label: 'Profile', icon: User },
 ];
@@ -128,7 +130,7 @@ export default function DashboardLayout({
                 <SidebarMenuItem key={link.href}>
                   <SidebarMenuButton
                     asChild
-                    isActive={pathname === link.href}
+                    isActive={pathname.startsWith(link.href) && (link.href !== '/dashboard' || pathname === '/dashboard')}
                     tooltip={link.label}
                   >
                     <Link href={link.href}>

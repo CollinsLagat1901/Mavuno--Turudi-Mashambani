@@ -1,14 +1,16 @@
+
 'use client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Phone, MessageSquare, Handshake } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
 
 const buyers = [
-  { name: 'Fresh Produce Inc.', location: 'Nairobi', crops: ['Avocado', 'Mangoes'], price: 'Negotiable' },
-  { name: 'Nakuru Millers', location: 'Nakuru', crops: ['Maize', 'Wheat'], price: 'Market Rate' },
-  { name: 'Kiambu Exporters', location: 'Kiambu', crops: ['Tomatoes', 'French Beans'], price: 'KES 140/kg' },
+  { id: 'buyer-1', name: 'Fresh Produce Inc.', location: 'Nairobi', crops: ['Avocado', 'Mangoes'], price: 'Negotiable' },
+  { id: 'buyer-2', name: 'Nakuru Millers', location: 'Nakuru', crops: ['Maize', 'Wheat'], price: 'Market Rate' },
+  { id: 'buyer-3', name: 'Kiambu Exporters', location: 'Kiambu', crops: ['Tomatoes', 'French Beans'], price: 'KES 140/kg' },
 ];
 
 export default function BuyerConnections() {
@@ -51,11 +53,13 @@ export default function BuyerConnections() {
                 </div>
             </CardContent>
             <div className="flex border-t">
-              <Button variant="ghost" className="w-1/2 rounded-none rounded-bl-lg">
+              <Button variant="ghost" className="w-1/2 rounded-none rounded-bl-lg" disabled>
                 <Phone className="mr-2" /> Call
               </Button>
-              <Button variant="ghost" className="w-1/2 rounded-none rounded-br-lg border-l">
-                <MessageSquare className="mr-2" /> Message
+              <Button variant="ghost" className="w-1/2 rounded-none rounded-br-lg border-l" asChild>
+                <Link href={`/dashboard/messages?recipient=${buyer.id}&listing=general`}>
+                    <MessageSquare className="mr-2" /> Message
+                </Link>
               </Button>
             </div>
           </Card>

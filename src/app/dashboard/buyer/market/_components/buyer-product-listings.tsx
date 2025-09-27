@@ -26,13 +26,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import Link from 'next/link';
 
 const priceData = [
-  { crop: 'Maize', location: 'Nairobi', price: 65, trend: 5, lastUpdated: 'Today', grade: 'A' },
-  { crop: 'Beans', location: 'Nakuru', price: 110, trend: -2, lastUpdated: 'Yesterday', grade: 'B' },
-  { crop: 'Tomatoes', location: 'Kiambu', price: 130, trend: 8, lastUpdated: 'Today', grade: 'A' },
-  { crop: 'Potatoes', location: 'Eldoret', price: 50, trend: 0, lastUpdated: '3 days ago', grade: 'C' },
-  { crop: 'Avocado', location: 'Muranga', price: 90, trend: 3, lastUpdated: 'Today', grade: 'A' },
+  { id: 'listing-1', farmerId: 'farmer-1', crop: 'Maize', location: 'Nairobi', price: 65, trend: 5, lastUpdated: 'Today', grade: 'A' },
+  { id: 'listing-2', farmerId: 'farmer-2', crop: 'Beans', location: 'Nakuru', price: 110, trend: -2, lastUpdated: 'Yesterday', grade: 'B' },
+  { id: 'listing-3', farmerId: 'farmer-3', crop: 'Tomatoes', location: 'Kiambu', price: 130, trend: 8, lastUpdated: 'Today', grade: 'A' },
+  { id: 'listing-4', farmerId: 'farmer-1', crop: 'Potatoes', location: 'Eldoret', price: 50, trend: 0, lastUpdated: '3 days ago', grade: 'C' },
+  { id: 'listing-5', farmerId: 'farmer-2', crop: 'Avocado', location: 'Muranga', price: 90, trend: 3, lastUpdated: 'Today', grade: 'A' },
 ];
 
 export default function BuyerProductListings() {
@@ -89,7 +90,7 @@ export default function BuyerProductListings() {
             </TableHeader>
             <TableBody>
               {priceData.map((item) => (
-                <TableRow key={`${item.crop}-${item.location}`}>
+                <TableRow key={item.id}>
                   <TableCell className="font-medium">{item.crop}</TableCell>
                   <TableCell>{item.location}</TableCell>
                    <TableCell><Badge variant="outline">{item.grade}</Badge></TableCell>
@@ -102,7 +103,11 @@ export default function BuyerProductListings() {
                   </TableCell>
                   <TableCell>{item.lastUpdated}</TableCell>
                   <TableCell className="text-right">
-                      <Button size="sm"><ShoppingCart className="mr-2 h-4 w-4" /> Buy</Button>
+                      <Button size="sm" asChild>
+                        <Link href={`/dashboard/messages?recipient=${item.farmerId}&listing=${item.id}`}>
+                           <ShoppingCart className="mr-2 h-4 w-4" /> Buy
+                        </Link>
+                      </Button>
                   </TableCell>
                 </TableRow>
               ))}

@@ -5,11 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Phone, MessageSquare, Handshake, Star } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
 
 const farmers = [
-  { name: 'Jembe Haraka', location: 'Nakuru', crops: ['Maize', 'Beans'], rating: 4.8, verified: true },
-  { name: 'Shamba Bora Farms', location: 'Eldoret', crops: ['Potatoes', 'Wheat'], rating: 4.5, verified: true },
-  { name: 'Kilimo Fresh', location: 'Kiambu', crops: ['Tomatoes', 'Cabbages', 'Kales'], rating: 4.9, verified: false },
+  { id: 'farmer-1', name: 'Jembe Haraka', location: 'Nakuru', crops: ['Maize', 'Beans'], rating: 4.8, verified: true },
+  { id: 'farmer-2', name: 'Shamba Bora Farms', location: 'Eldoret', crops: ['Potatoes', 'Wheat'], rating: 4.5, verified: true },
+  { id: 'farmer-3', name: 'Kilimo Fresh', location: 'Kiambu', crops: ['Tomatoes', 'Cabbages', 'Kales'], rating: 4.9, verified: false },
 ];
 
 export default function BuyerFarmerConnections() {
@@ -55,11 +56,15 @@ export default function BuyerFarmerConnections() {
                 </div>
             </CardContent>
             <div className="flex border-t">
-              <Button variant="ghost" className="w-1/2 rounded-none rounded-bl-lg">
-                <MessageSquare className="mr-2" /> Message
+              <Button variant="ghost" className="w-1/2 rounded-none rounded-bl-lg" asChild>
+                <Link href={`/dashboard/messages?recipient=${farmer.id}&listing=general`}>
+                    <MessageSquare className="mr-2" /> Message
+                </Link>
               </Button>
-              <Button variant="ghost" className="w-1/2 rounded-none rounded-br-lg border-l">
-                View Profile
+              <Button variant="ghost" className="w-1/2 rounded-none rounded-br-lg border-l" asChild>
+                <Link href={`/dashboard/profile/farmer/${farmer.id}`}>
+                    View Profile
+                </Link>
               </Button>
             </div>
           </Card>
