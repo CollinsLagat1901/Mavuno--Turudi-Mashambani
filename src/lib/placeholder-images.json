@@ -89,6 +89,12 @@
       "description": "A tractor plowing a field under the sun.",
       "imageUrl": "https://images.unsplash.com/photo-1692975013081-4d3ad88a3954?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0cmFjdG9yJTIwZmllbGR8ZW58MHx8fHwxNzU5MDQ3MzEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "tractor field"
+    },
+    {
+      "id": "how-it-works-hero",
+      "description": "A close up of a hand holding a phone in a farm.",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/public/folder/photos/homempage%20back.jpg",
+      "imageHint": "phone farm"
     }
   ]
 }
