@@ -20,7 +20,7 @@ const Hero = () => {
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/30 to-transparent" />
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-foreground px-4">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-primary-foreground px-4">
         <div className="max-w-4xl space-y-6">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-headline">
             <span className="text-primary">🌾 Mavuno Insights</span> Turudi Mashambani
@@ -41,7 +41,7 @@ const Hero = () => {
           </div>
         </div>
         <div className="absolute bottom-10 animate-bounce">
-            <ArrowDown className="w-8 h-8 text-foreground/50" />
+            <ArrowDown className="w-8 h-8 text-primary-foreground/50" />
         </div>
       </div>
     </section>
