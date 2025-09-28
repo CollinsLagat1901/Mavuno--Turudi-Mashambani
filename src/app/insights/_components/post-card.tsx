@@ -1,3 +1,4 @@
+
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -94,43 +95,45 @@ const PostCard = ({ post, onLike, onComment }: PostCardProps) => {
                     <span>{post.comments.length} Comments</span>
                 </div>
                 <Separator />
-                <div className="flex justify-around pt-2">
-                    <Button variant="ghost" onClick={() => onLike(post.id)}>
-                        <ThumbsUp className="mr-2" /> Like
-                    </Button>
-                    <CollapsibleTrigger asChild>
-                         <Button variant="ghost" onClick={() => setShowComments(!showComments)}>
-                            <MessageSquare className="mr-2" /> Comment
+                <Collapsible open={showComments} onOpenChange={setShowComments}>
+                    <div className="flex justify-around pt-2">
+                        <Button variant="ghost" onClick={() => onLike(post.id)}>
+                            <ThumbsUp className="mr-2" /> Like
                         </Button>
-                    </CollapsibleTrigger>
-                </div>
-                 <CollapsibleContent className="mt-4 space-y-4">
-                    {post.comments.map(comment => (
-                        <div key={comment.id} className="flex items-start gap-3">
-                            <Avatar className="h-8 w-8">
-                                <AvatarFallback>{comment.user.name.substring(0,2)}</AvatarFallback>
-                            </Avatar>
-                            <div className="bg-muted p-3 rounded-lg flex-1">
-                                <p className="text-sm font-semibold">{comment.user.name} <span className="text-xs text-muted-foreground">({comment.user.role})</span></p>
-                                <p className="text-sm">{comment.text}</p>
+                        <CollapsibleTrigger asChild>
+                             <Button variant="ghost">
+                                <MessageSquare className="mr-2" /> Comment
+                            </Button>
+                        </CollapsibleTrigger>
+                    </div>
+                    <CollapsibleContent className="mt-4 space-y-4">
+                        {post.comments.map(comment => (
+                            <div key={comment.id} className="flex items-start gap-3">
+                                <Avatar className="h-8 w-8">
+                                    <AvatarFallback>{comment.user.name.substring(0,2)}</AvatarFallback>
+                                </Avatar>
+                                <div className="bg-muted p-3 rounded-lg flex-1">
+                                    <p className="text-sm font-semibold">{comment.user.name} <span className="text-xs text-muted-foreground">({comment.user.role})</span></p>
+                                    <p className="text-sm">{comment.text}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                     <form onSubmit={handleCommentSubmit} className="flex items-start gap-3 pt-4">
-                        <Avatar className="h-8 w-8">
-                            <AvatarFallback>You</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                            <Textarea 
-                                placeholder="Write a comment..." 
-                                value={commentText} 
-                                onChange={(e) => setCommentText(e.target.value)}
-                                className="min-h-[40px]"
-                             />
-                             <Button type="submit" size="sm" className="mt-2">Post Comment</Button>
-                        </div>
-                    </form>
-                </CollapsibleContent>
+                        ))}
+                         <form onSubmit={handleCommentSubmit} className="flex items-start gap-3 pt-4">
+                            <Avatar className="h-8 w-8">
+                                <AvatarFallback>You</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                                <Textarea 
+                                    placeholder="Write a comment..." 
+                                    value={commentText} 
+                                    onChange={(e) => setCommentText(e.target.value)}
+                                    className="min-h-[40px]"
+                                 />
+                                 <Button type="submit" size="sm" className="mt-2">Post Comment</Button>
+                            </div>
+                        </form>
+                    </CollapsibleContent>
+                </Collapsible>
             </CardContent>
         </Card>
     );
