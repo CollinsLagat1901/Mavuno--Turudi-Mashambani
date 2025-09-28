@@ -100,7 +100,7 @@ const PostCard = ({ post, onLike, onComment }: PostCardProps) => {
                         <Button variant="ghost" onClick={() => onLike(post.id)}>
                             <ThumbsUp className="mr-2" /> Like
                         </Button>
-                        <CollapsibleTrigger asChild>
+                         <CollapsibleTrigger asChild>
                              <Button variant="ghost">
                                 <MessageSquare className="mr-2" /> Comment
                             </Button>

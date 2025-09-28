@@ -41,6 +41,30 @@
       "description": "A detailed shot of a maize cob.",
       "imageUrl": "https://images.unsplash.com/photo-1599822652175-3474d86415a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYWl6ZSUyMGNvYiUyMGNsb3NlfGVufDB8fHx8MTc1ODkxMzM3MHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "maize cob close"
+    },
+    {
+      "id": "maize-harvest",
+      "description": "A harvest of maize cobs.",
+      "imageUrl": "https://images.unsplash.com/photo-1676289124112-ade6eb1421b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYWl6ZSUyMGhhcnZlc3R8ZW58MHx8fHwxNzU5MDY0NDE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "maize harvest"
+    },
+    {
+      "id": "pest-insect",
+      "description": "An insect pest on a leaf.",
+      "imageUrl": "https://images.unsplash.com/photo-1580970196511-1a12d3e64c4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXN0JTIwaW5zZWN0fGVufDB8fHx8MTc1OTA2NDQxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "pest insect"
+    },
+    {
+      "id": "kenya-truck",
+      "description": "A truck on a road in Kenya.",
+      "imageUrl": "https://images.unsplash.com/photo-1551471698-c7787ff6b7ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx0cnVjayUyMHJvYWR8ZW58MHx8fHwxNzU5MDY0NDE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "truck road"
+    },
+    {
+      "id": "avocado-box",
+      "description": "A box of harvested avocados.",
+      "imageUrl": "https://images.unsplash.com/photo-1570064758886-3fd56fddbe57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhdm9jYWRvJTIwYm94fGVufDB8fHx8MTc1OTA2NDQxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "avocado box"
     }
   ]
 }

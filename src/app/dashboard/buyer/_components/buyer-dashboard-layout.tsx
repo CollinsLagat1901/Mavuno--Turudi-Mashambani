@@ -52,7 +52,7 @@ import { Badge } from '@/components/ui/badge';
 const navLinks = [
   { href: '/dashboard/buyer', label: 'Home', icon: Home },
   { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageSquare },
-  { href: '/insights', label: 'Socials', icon: Users },
+  { href: '/dashboard/buyer/socials', label: 'Socials', icon: Users },
   { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
   { href: '/dashboard/buyer/market', label: 'Market Analysis', icon: ShoppingBag },
   { href: '/dashboard/buyer/transport', label: 'Transport', icon: Tractor },
