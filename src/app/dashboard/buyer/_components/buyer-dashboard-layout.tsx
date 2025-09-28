@@ -181,7 +181,7 @@ export default function BuyerDashboardLayout({
 
   return (
     <SidebarProvider>
-        <Sidebar collapsible="icon" side="left" variant="floating">
+        <Sidebar collapsible="icon" side="left" variant="floating" className="bg-muted">
           <SidebarHeader>
             <MavunoLogo />
           </SidebarHeader>
