@@ -49,7 +49,7 @@ const initialPosts = [
     content: "Have a 10-ton truck available for produce delivery from Eldoret to Nairobi this weekend. Competitive rates. DM for booking. 🚚",
     timestamp: "1d ago",
     likes: 8,
-    image: "https://picsum.photos/seed/kenya-truck/800/400",
+    image: "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/truck.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vdHJ1Y2suanBnIiwiaWF0IjoxNzU5MDg4NjY3LCJleHAiOjE3NjE2ODA2Njd9.1POTaVNhPppv440FsEYbVk3hZBIgf3a3B5iLDaitsGw",
     imageHint: "truck road",
     comments: []
   },
