@@ -59,7 +59,7 @@ const initialPosts = [
     content: "We are actively buying avocados for export. Looking for certified farmers in Murang'a and Kiambu. Grade A only. Contact us for a contract.",
     timestamp: "2d ago",
     likes: 22,
-    image: "https://picsum.photos/seed/avocado-box/800/400",
+    image: "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/ovacados.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vb3ZhY2Fkb3MuanBnIiwiaWF0IjoxNzU5MDg4NzYzLCJleHAiOjE3NjE2ODA3NjN9.gfc3YFkYw9k__wUIB6depM669ImB46wuB8X_KDmFRJo",
     imageHint: "avocado box",
     comments: []
   }
@@ -188,3 +188,5 @@ const Feed = () => {
 }
 
 export default Feed;
+
+    
