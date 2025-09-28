@@ -61,7 +61,7 @@ const navLinks = [
   { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
   { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
   { href: '/farm-details', label: 'Farmer Details', icon: BookUser },
-  { href: '/dashboard/transporter', label: 'Transport', icon: Tractor },
+  { href: '/dashboard/transport', label: 'Transport', icon: Tractor },
   { href: '/dashboard/profile', label: 'Profile', icon: User },
 ];
 

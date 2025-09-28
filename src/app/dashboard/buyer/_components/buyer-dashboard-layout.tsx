@@ -11,6 +11,7 @@ import {
   ShoppingBag,
   User as UserIcon,
   MessageCircle,
+  Tractor,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut, User } from 'firebase/auth';
@@ -52,6 +53,7 @@ const navLinks = [
   { href: '/dashboard/buyer', label: 'Home', icon: Home },
   { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
   { href: '/dashboard/buyer/market', label: 'Market Analysis', icon: LineChart },
+  { href: '/dashboard/buyer/transport', label: 'Transport', icon: Tractor },
   { href: '/dashboard/buyer/profile', label: 'Profile', icon: UserIcon },
   { href: '/dashboard/buyer/settings', label: 'Settings', icon: Settings },
 ];
