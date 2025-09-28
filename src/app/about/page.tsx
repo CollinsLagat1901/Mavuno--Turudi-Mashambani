@@ -1,3 +1,4 @@
+
 import Header from '@/components/landing/header';
 import Footer from '@/components/landing/footer';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -9,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
 const AboutPage = () => {
-    const aboutHeroImage = PlaceHolderImages.find((img) => img.id === 'vision-farm');
+    const aboutHeroImage = PlaceHolderImages.find((img) => img.id === 'about-hero');
 
     const teamMembers = [
         {
