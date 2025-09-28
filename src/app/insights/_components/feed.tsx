@@ -76,6 +76,8 @@ const Feed = () => {
     }
     
     const filteredPosts = posts.filter(post => filter === 'All' || post.user.role === filter);
+    
+    const ActiveIcon = roleOptions.find(r => r.value === filter)?.icon;
 
     return (
         <div className="max-w-3xl mx-auto">
@@ -86,7 +88,7 @@ const Feed = () => {
                     <Select value={filter} onValueChange={(value: Role) => setFilter(value)}>
                         <SelectTrigger className="w-full sm:w-[180px]">
                            <div className="flex items-center gap-2">
-                               {roleOptions.find(r => r.value === filter)?.icon({ className: "w-4 h-4"})}
+                               {ActiveIcon && <ActiveIcon className="w-4 h-4" />}
                                <SelectValue />
                            </div>
                         </SelectTrigger>
