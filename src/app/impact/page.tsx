@@ -9,16 +9,29 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Tooltip as UiTooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const ImpactPage = () => {
+    const heroImage = PlaceHolderImages.find((img) => img.id === 'vision-farm');
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="bg-accent py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-6 text-center">
+        <section className="relative py-16 md:py-24">
+            {heroImage && (
+                <Image
+                    src={heroImage.imageUrl}
+                    alt={heroImage.description}
+                    fill
+                    className="object-cover"
+                    data-ai-hint={heroImage.imageHint}
+                />
+            )}
+            <div className="absolute inset-0 bg-accent/90" />
+          <div className="relative container mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto space-y-4">
               <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl font-headline text-primary">
                 {impactData.title}
