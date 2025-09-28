@@ -49,11 +49,8 @@ const buyerAssistantFlow = ai.defineFlow(
 
     const { text } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      history: genkitHistory as Part[],
-      prompt: {
-        role: 'user',
-        content: [{ text: message }],
-      },
+      history: genkitHistory,
+      prompt: message,
       tools: [getMarketDataTool],
       system: `You are Mavuno Assistant, a friendly and expert AI advisor for produce buyers in Kenya.
 Your goal is to provide helpful, actionable, and data-driven advice for sourcing agricultural products.
