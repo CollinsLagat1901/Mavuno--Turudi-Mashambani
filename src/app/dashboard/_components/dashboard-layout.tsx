@@ -12,7 +12,6 @@ import {
   ShoppingBag,
   User,
   BookUser,
-  MessageCircle,
   MessageSquare,
   Tractor,
 } from 'lucide-react';
@@ -56,7 +55,7 @@ import { Separator } from '@/components/ui/separator';
 
 const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
-  { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
+  { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageSquare },
   { href: '/dashboard/insights', label: 'Insights', icon: LineChart },
   { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
   { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },

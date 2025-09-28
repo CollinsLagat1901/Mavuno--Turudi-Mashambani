@@ -10,7 +10,7 @@ import {
   Settings,
   ShoppingBag,
   User as UserIcon,
-  MessageCircle,
+  MessageSquare,
   Tractor,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -51,7 +51,8 @@ import { Badge } from '@/components/ui/badge';
 
 const navLinks = [
   { href: '/dashboard/buyer', label: 'Home', icon: Home },
-  { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageCircle },
+  { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageSquare },
+  { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
   { href: '/dashboard/buyer/market', label: 'Market Analysis', icon: LineChart },
   { href: '/dashboard/buyer/transport', label: 'Transport', icon: Tractor },
   { href: '/dashboard/buyer/profile', label: 'Profile', icon: UserIcon },
@@ -163,7 +164,7 @@ export default function BuyerDashboardLayout({
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
            <DropdownMenuItem asChild>
-            <Link href="/dashboard/settings">
+            <Link href="/dashboard/buyer/settings">
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </Link>
