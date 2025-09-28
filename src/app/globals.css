@@ -12,7 +12,7 @@
     --popover-foreground: 0 0% 3.9%;
     --primary: 130 90% 25%; /* Vibrant Kenyan Green */
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 72% 51%; /* Kenyan Flag Red */
+    --secondary: 40 94% 56%; /* #F9A825 Gold */
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -35,7 +35,7 @@
     --popover-foreground: 0 0% 98%;
     --primary: 130 90% 30%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 72% 51%;
+    --secondary: 40 94% 56%; /* #F9A825 Gold */
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
