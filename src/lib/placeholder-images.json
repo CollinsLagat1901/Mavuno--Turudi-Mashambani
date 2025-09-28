@@ -39,7 +39,7 @@
     {
       "id": "beans-crop",
       "description": "Green beans growing in a field.",
-      "imageUrl": "https://images.unsplash.com/photo-1632640110804-58827a6b37fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxncmVlbiUyMGJlYW5zfGVufDB8fHx8MTc1ODkxMzMwNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/beans.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vYmVhbnMuanBnIiwiaWF0IjoxNzU5MDg5MDI4LCJleHAiOjE3NjE2ODEwMjh9.EiuWt_SYggb1XLCBrMj3xqoQOx1IPHQUg417Kf75IPc",
       "imageHint": "green beans"
     },
     {
@@ -51,25 +51,25 @@
     {
       "id": "maize-harvest",
       "description": "A harvest of maize cobs.",
-      "imageUrl": "https://images.unsplash.com/photo-1676289124112-ade6eb1421b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtYWl6ZSUyMGhhcnZlc3R8ZW58MHx8fHwxNzU5MDY0NDE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/maize.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vbWFpemUuanBnIiwiaWF0IjoxNzU5MDg4MTA1LCJleHAiOjE3NTk2OTI5MDV9.x0Q8wKEVEHiPLVRYgvMOhqaQxB8YdrTOoNkYYJb2Cpg",
       "imageHint": "maize harvest"
     },
     {
       "id": "pest-insect",
       "description": "An insect pest on a leaf.",
-      "imageUrl": "https://images.unsplash.com/photo-1580970196511-1a12d3e64c4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwZXN0JTIwaW5zZWN0fGVufDB8fHx8MTc1OTA2NDQxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/army%20worm.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vYXJteSB3b3JtLmpwZyIsImlhdCI6MTc1OTA4ODc4NCwiZXhwIjoxNzYxNjgwNzg0fQ.ym5pOra7Q4ESVFybifpPmv40rGR_1itOwt790ZOUhhk",
       "imageHint": "pest insect"
     },
     {
       "id": "kenya-truck",
       "description": "A truck on a road in Kenya.",
-      "imageUrl": "https://images.unsplash.com/photo-1551471698-c7787ff6b7ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx0cnVjayUyMHJvYWR8ZW58MHx8fHwxNzU5MDY0NDE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/truck.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vdHJ1Y2suanBnIiwiaWF0IjoxNzU5MDg4NjY3LCJleHAiOjE3NjE2ODA2Njd9.1POTaVNhPppv440FsEYbVk3hZBIgf3a3B5iLDaitsGw",
       "imageHint": "truck road"
     },
     {
       "id": "avocado-box",
       "description": "A box of harvested avocados.",
-      "imageUrl": "https://images.unsplash.com/photo-1570064758886-3fd56fddbe57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhdm9jYWRvJTIwYm94fGVufDB8fHx8MTc1OTA2NDQxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/ovacados.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vb3ZhY2Fkb3MuanBnIiwiaWF0IjoxNzU5MDg4NzYzLCJleHAiOjE3NjE2ODA3NjN9.gfc3YFkYw9k__wUIB6depM669ImB46wuB8X_KDmFRJo",
       "imageHint": "avocado box"
     },
     {
