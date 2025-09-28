@@ -69,6 +69,7 @@ const Feed = () => {
     const [posts, setPosts] = useState(initialPosts);
     const [filter, setFilter] = useState<Role>("All");
     const [newPostText, setNewPostText] = useState("");
+    const [isImageAttached, setIsImageAttached] = useState(false);
 
     const handleLike = (postId: number) => {
         setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
@@ -82,10 +83,15 @@ const Feed = () => {
      const handleCreatePost = () => {
         if (!newPostText.trim()) return;
         
-        const agriculturalImages = PlaceHolderImages.filter(img => 
-            ['kenyan farm', 'maize crop', 'green beans', 'kenyan farmers crops', 'farm work', 'harvest', 'tractor field'].includes(img.imageHint)
-        );
-        const randomImage = agriculturalImages[Math.floor(Math.random() * agriculturalImages.length)];
+        let postImage, postImageHint;
+        if (isImageAttached) {
+            const agriculturalImages = PlaceHolderImages.filter(img => 
+                ['kenyan farm', 'maize crop', 'green beans', 'kenyan farmers crops', 'farm work', 'harvest', 'tractor field'].includes(img.imageHint)
+            );
+            const randomImage = agriculturalImages[Math.floor(Math.random() * agriculturalImages.length)];
+            postImage = randomImage.imageUrl;
+            postImageHint = randomImage.imageHint;
+        }
 
         const newPost = {
             id: Date.now(),
@@ -93,13 +99,14 @@ const Feed = () => {
             content: newPostText,
             timestamp: "Just now",
             likes: 0,
-            image: randomImage.imageUrl,
-            imageHint: randomImage.imageHint,
+            image: postImage,
+            imageHint: postImageHint,
             comments: []
         };
 
         setPosts([newPost, ...posts]);
         setNewPostText("");
+        setIsImageAttached(false);
     };
     
     const filteredPosts = posts.filter(post => filter === 'All' || post.user.role === filter);
@@ -140,18 +147,20 @@ const Feed = () => {
                         placeholder="Share an update, ask a question, or post a listing..." 
                         value={newPostText}
                         onChange={(e) => setNewPostText(e.target.value)}
-                        className="mb-2" 
+                        className="mb-2 border-0 shadow-none focus-visible:ring-0 p-0 text-base" 
                     />
                     <div className="flex justify-between items-center">
-                        <div className="flex gap-2">
-                             <Button variant="outline" size="sm" onClick={() => (document.getElementById('file-upload') as HTMLInputElement).click()}>
-                                <ImageIcon className="mr-2 h-4 w-4" />
-                                Attach Image
+                        <div className="flex gap-1">
+                             <Button 
+                                variant={isImageAttached ? "secondary" : "ghost"} 
+                                size="icon" 
+                                onClick={() => setIsImageAttached(!isImageAttached)}
+                                title="Attach Image"
+                            >
+                                <ImageIcon className="h-5 w-5" />
                             </Button>
-                            <Input type="file" id="file-upload" className="hidden" />
                         </div>
                         <Button size="sm" onClick={handleCreatePost} disabled={!newPostText.trim()}>
-                            <Send className="mr-2 h-4 w-4" />
                             Post
                         </Button>
                     </div>
@@ -169,5 +178,3 @@ const Feed = () => {
 }
 
 export default Feed;
-
-    
