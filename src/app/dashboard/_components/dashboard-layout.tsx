@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -56,7 +55,7 @@ import { Separator } from '@/components/ui/separator';
 const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
   { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageSquare },
-  { href: '/dashboard/insights', label: 'Insights', icon: LineChart },
+  { href: '/insights', label: 'Insights Feed', icon: LineChart },
   { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
   { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
   { href: '/farm-details', label: 'Farmer Details', icon: BookUser },
