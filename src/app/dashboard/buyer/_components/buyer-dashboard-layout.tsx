@@ -5,13 +5,13 @@ import Link from 'next/link';
 import {
   Bell,
   Home,
-  LineChart,
   LogOut,
   Settings,
   ShoppingBag,
   User as UserIcon,
   MessageSquare,
   Tractor,
+  Users,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut, User } from 'firebase/auth';
@@ -52,8 +52,9 @@ import { Badge } from '@/components/ui/badge';
 const navLinks = [
   { href: '/dashboard/buyer', label: 'Home', icon: Home },
   { href: '/dashboard/buyer/assistant', label: 'Mavuno Assistant', icon: MessageSquare },
+  { href: '/insights', label: 'Socials', icon: Users },
   { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
-  { href: '/dashboard/buyer/market', label: 'Market Analysis', icon: LineChart },
+  { href: '/dashboard/buyer/market', label: 'Market Analysis', icon: ShoppingBag },
   { href: '/dashboard/buyer/transport', label: 'Transport', icon: Tractor },
   { href: '/dashboard/buyer/profile', label: 'Profile', icon: UserIcon },
   { href: '/dashboard/buyer/settings', label: 'Settings', icon: Settings },

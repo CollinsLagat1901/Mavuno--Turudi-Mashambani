@@ -4,15 +4,14 @@ import Link from 'next/link';
 import {
   Bell,
   Home,
-  LineChart,
   LogOut,
   Settings,
-  Sheet as SheetIcon,
   ShoppingBag,
   User,
   BookUser,
   MessageSquare,
   Tractor,
+  Users,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
@@ -55,7 +54,7 @@ import { Separator } from '@/components/ui/separator';
 const navLinks = [
   { href: '/dashboard', label: 'Home', icon: Home },
   { href: '/dashboard/assistant', label: 'Mavuno Assistant', icon: MessageSquare },
-  { href: '/insights', label: 'Insights Feed', icon: LineChart },
+  { href: '/insights', label: 'Socials', icon: Users },
   { href: '/dashboard/market', label: 'Market', icon: ShoppingBag },
   { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
   { href: '/farm-details', label: 'Farmer Details', icon: BookUser },

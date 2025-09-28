@@ -81,7 +81,7 @@ const Feed = () => {
         <div className="max-w-3xl mx-auto">
             {/* Header and Controls */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-                <h1 className="text-3xl font-bold tracking-tight text-primary">Mavuno Insights Feed</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-primary">Mavuno Socials</h1>
                 <div className="flex items-center gap-2 w-full sm:w-auto">
                     <Select value={filter} onValueChange={(value: Role) => setFilter(value)}>
                         <SelectTrigger className="w-full sm:w-[180px]">
