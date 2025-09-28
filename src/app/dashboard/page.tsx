@@ -68,12 +68,17 @@ export default function DashboardPage() {
     return (
         <DashboardLayout>
         <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
-            <div className="flex items-center justify-between space-y-2">
-            <div>
-                <p className="text-muted-foreground">
-                    {loading ? <Skeleton className="h-5 w-48 mt-1" /> : `Welcome back, ${userData?.name || 'Farmer'}!`}
-                </p>
-            </div>
+            <div className="space-y-2">
+              {loading ? (
+                <Skeleton className="h-9 w-1/2" />
+              ) : (
+                <h1 className="text-3xl font-bold tracking-tight">
+                  Welcome back, {userData?.name || 'Farmer'}!
+                </h1>
+              )}
+               <p className="text-muted-foreground">
+                Here's a smart summary of your farm and market conditions.
+              </p>
             </div>
             <SummaryCards />
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
