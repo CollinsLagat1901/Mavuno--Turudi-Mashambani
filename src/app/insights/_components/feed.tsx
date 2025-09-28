@@ -16,7 +16,7 @@ const initialPosts = [
     content: "Just harvested 20 bags of grade A maize. Quality guaranteed! Looking for a buyer in the Nakuru region. 🌽",
     timestamp: "2h ago",
     likes: 12,
-    image: "https://picsum.photos/seed/maize-harvest/800/400",
+    image: "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/maize.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vbWFpemUuanBnIiwiaWF0IjoxNzU5MDg4MTA1LCJleHAiOjE3NTk2OTI5MDV9.x0Q8wKEVEHiPLVRYgvMOhqaQxB8YdrTOoNkYYJb2Cpg",
     imageHint: "maize harvest",
     comments: [
       { id: 1, user: { name: "Mary Wanjiru", role: "Buyer" }, text: "Interested! DM me your price per bag." },
