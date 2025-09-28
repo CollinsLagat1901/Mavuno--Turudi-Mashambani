@@ -10,6 +10,16 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Input } from '@/components/ui/input';
 
 const initialPosts = [
+    {
+    id: 5,
+    user: { name: "Agri Ministry", role: "Government", avatar: "https://avatar.vercel.sh/ministry.png" },
+    content: "Announcing the MEGA FARM REVOLUTION! 🚜 We're launching a new initiative to support large-scale farming projects with subsidies on equipment and inputs. Let's build a food-secure Kenya together! #MavunoRevolution #KilimoBora",
+    timestamp: "1h ago",
+    likes: 52,
+    image: "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/advert2.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vYWR2ZXJ0Mi5qcGciLCJpYXQiOjE3NTkwODgyOTUsImV4cCI6MTc1OTY5MzA5NX0.J8FkRipUOavnHiES7rEGtczGE-eLHVlyT1B1dfipDzM",
+    imageHint: "farming initiative",
+    comments: []
+  },
   {
     id: 1,
     user: { name: "John Kiptoo", role: "Farmer", avatar: "https://avatar.vercel.sh/john.png" },
