@@ -1,10 +1,13 @@
+
 'use client';
 import { useState } from 'react';
-import { Pencil, User, Users, ShoppingBag, Tractor, Landmark } from 'lucide-react';
+import { Pencil, User, Users, ShoppingBag, Tractor, Landmark, Image as ImageIcon, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import PostCard from './post-card';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { Input } from '@/components/ui/input';
 
 const initialPosts = [
   {
@@ -26,7 +29,7 @@ const initialPosts = [
     content: "DISEASE ALERT 🚨: We've received reports of Fall Armyworm in parts of Nakuru county. Farmers are advised to monitor their crops closely and use approved pesticides. Contact your local extension officer for support.",
     timestamp: "5h ago",
     likes: 34,
-    image: "https://picsum.photos/seed/armyworm/800/400",
+    image: "https://picsum.photos/seed/pest-insect/800/400",
     imageHint: "pest insect",
     comments: []
   },
@@ -65,6 +68,7 @@ const roleOptions: { value: Role, label: string, icon: React.ComponentType<any> 
 const Feed = () => {
     const [posts, setPosts] = useState(initialPosts);
     const [filter, setFilter] = useState<Role>("All");
+    const [newPostText, setNewPostText] = useState("");
 
     const handleLike = (postId: number) => {
         setPosts(posts.map(p => p.id === postId ? { ...p, likes: p.likes + 1 } : p));
@@ -74,10 +78,33 @@ const Feed = () => {
         const newComment = { id: Date.now(), user: { name: "Jembe Haraka", role: "Farmer" }, text: commentText };
         setPosts(posts.map(p => p.id === postId ? { ...p, comments: [...p.comments, newComment] } : p));
     }
+
+     const handleCreatePost = () => {
+        if (!newPostText.trim()) return;
+        
+        const agriculturalImages = PlaceHolderImages.filter(img => 
+            ['kenyan farm', 'maize crop', 'green beans', 'kenyan farmers crops', 'farm work', 'harvest', 'tractor field'].includes(img.imageHint)
+        );
+        const randomImage = agriculturalImages[Math.floor(Math.random() * agriculturalImages.length)];
+
+        const newPost = {
+            id: Date.now(),
+            user: { name: "Jembe Haraka", role: "Farmer", avatar: "https://avatar.vercel.sh/jembe.png" },
+            content: newPostText,
+            timestamp: "Just now",
+            likes: 0,
+            image: randomImage.imageUrl,
+            imageHint: randomImage.imageHint,
+            comments: []
+        };
+
+        setPosts([newPost, ...posts]);
+        setNewPostText("");
+    };
     
     const filteredPosts = posts.filter(post => filter === 'All' || post.user.role === filter);
     
-    const ActiveIcon = roleOptions.find(r => r.value === filter)?.icon;
+    const IconComponent = roleOptions.find(r => r.value === filter)?.icon;
 
     return (
         <div className="max-w-3xl mx-auto">
@@ -88,7 +115,7 @@ const Feed = () => {
                     <Select value={filter} onValueChange={(value: Role) => setFilter(value)}>
                         <SelectTrigger className="w-full sm:w-[180px]">
                            <div className="flex items-center gap-2">
-                               {ActiveIcon && <ActiveIcon className="w-4 h-4" />}
+                               {IconComponent && <IconComponent className="w-4 h-4" />}
                                <SelectValue />
                            </div>
                         </SelectTrigger>
@@ -103,19 +130,30 @@ const Feed = () => {
                             ))}
                         </SelectContent>
                     </Select>
-                    <Button className="w-full sm:w-auto">
-                        <Pencil className="mr-2 h-4 w-4" />
-                        Create Post
-                    </Button>
                 </div>
             </div>
 
             {/* Create Post Card */}
              <div className="mb-6">
-                 <div className="p-4 border rounded-lg bg-card">
-                    <Textarea placeholder="Share an update, ask a question, or post a listing..." className="mb-2" />
-                    <div className="flex justify-end">
-                        <Button size="sm">Post</Button>
+                 <div className="p-4 border rounded-lg bg-card space-y-3">
+                    <Textarea 
+                        placeholder="Share an update, ask a question, or post a listing..." 
+                        value={newPostText}
+                        onChange={(e) => setNewPostText(e.target.value)}
+                        className="mb-2" 
+                    />
+                    <div className="flex justify-between items-center">
+                        <div className="flex gap-2">
+                             <Button variant="outline" size="sm" onClick={() => (document.getElementById('file-upload') as HTMLInputElement).click()}>
+                                <ImageIcon className="mr-2 h-4 w-4" />
+                                Attach Image
+                            </Button>
+                            <Input type="file" id="file-upload" className="hidden" />
+                        </div>
+                        <Button size="sm" onClick={handleCreatePost} disabled={!newPostText.trim()}>
+                            <Send className="mr-2 h-4 w-4" />
+                            Post
+                        </Button>
                     </div>
                 </div>
              </div>
@@ -131,3 +169,5 @@ const Feed = () => {
 }
 
 export default Feed;
+
+    

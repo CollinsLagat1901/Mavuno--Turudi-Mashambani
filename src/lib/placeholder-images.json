@@ -65,6 +65,24 @@
       "description": "A box of harvested avocados.",
       "imageUrl": "https://images.unsplash.com/photo-1570064758886-3fd56fddbe57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhdm9jYWRvJTIwYm94fGVufDB8fHx8MTc1OTA2NDQxOXww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "avocado box"
+    },
+    {
+      "id": "farmer-field",
+      "description": "Farmer standing in a green field.",
+      "imageUrl": "https://images.unsplash.com/photo-1756591871805-e85faf61b234?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmYXJtJTIwd29ya3xlbnwwfHx8fDE3NTkwNjQ2NzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farm work"
+    },
+    {
+      "id": "harvest-basket",
+      "description": "A basket full of fresh harvest vegetables.",
+      "imageUrl": "https://images.unsplash.com/photo-1515276427842-f85802d514a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxoYXJ2ZXN0fGVufDB8fHx8MTc1OTA2NDY3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "harvest"
+    },
+    {
+      "id": "tractor-plowing",
+      "description": "A tractor plowing a field under the sun.",
+      "imageUrl": "https://images.unsplash.com/photo-1692975013081-4d3ad88a3954?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0cmFjdG9yJTIwZmllbGR8ZW58MHx8fHwxNzU5MDQ3MzEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tractor field"
     }
   ]
 }
