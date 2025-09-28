@@ -34,6 +34,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Loader2, Landmark, Tractor, ShoppingCart, User as UserIcon } from 'lucide-react';
 import MavunoLogo from '@/components/icons/mavuno-logo';
 import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 const roles = [
     {
@@ -41,24 +42,28 @@ const roles = [
         label: 'Farmer',
         icon: UserIcon,
         description: 'Get crop insights, weather data, and market prices.',
+        isAvailable: true,
     },
     {
         name: 'buyer',
         label: 'Buyer',
         icon: ShoppingCart,
         description: 'Browse produce, contact farmers, and post purchase requests.',
+        isAvailable: true,
     },
     {
         name: 'transporter',
         label: 'Transporter',
         icon: Tractor,
         description: 'Connect with farmers and buyers needing logistics.',
+        isAvailable: true,
     },
     {
         name: 'government',
         label: 'Admin / Govt. Officer',
         icon: Landmark,
         description: 'Access regional agricultural data and reports.',
+        isAvailable: false,
     },
 ] as const;
 
@@ -328,9 +333,9 @@ export function AuthForm() {
                             {roles.map(role => (
                                 <FormItem key={role.name}>
                                     <FormControl>
-                                        <RadioGroupItem value={role.name} id={role.name} className="sr-only" />
+                                        <RadioGroupItem value={role.name} id={role.name} className="sr-only" disabled={!role.isAvailable}/>
                                     </FormControl>
-                                    <FormLabel htmlFor={role.name} className="cursor-pointer">
+                                    <FormLabel htmlFor={role.name} className={cn("cursor-pointer", !role.isAvailable && "cursor-not-allowed opacity-50")}>
                                         <Card className={cn(
                                             "border-2 border-muted bg-popover hover:bg-accent hover:text-accent-foreground",
                                             field.value === role.name && "border-primary"
@@ -341,6 +346,7 @@ export function AuthForm() {
                                             </CardHeader>
                                             <CardContent className="p-4 pt-0">
                                                 <p className="text-xs text-muted-foreground">{role.description}</p>
+                                                {!role.isAvailable && <Badge variant="secondary" className="mt-2">Coming Soon</Badge>}
                                             </CardContent>
                                         </Card>
                                     </FormLabel>
