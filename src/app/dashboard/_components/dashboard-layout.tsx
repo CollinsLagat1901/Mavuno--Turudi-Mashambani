@@ -171,7 +171,7 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-        <Sidebar collapsible="icon" side="left" variant="floating">
+        <Sidebar collapsible="icon" side="left" variant="floating" className="bg-muted">
           <SidebarHeader>
             <MavunoLogo />
           </SidebarHeader>
@@ -197,7 +197,7 @@ export default function DashboardLayout({
         </Sidebar>
 
       <SidebarInset>
-        <header className="sticky top-0 z-40 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 sm:px-8">
+        <header className="sticky top-0 z-40 flex h-16 items-center justify-between gap-4 border-b bg-muted px-4 sm:px-8">
             <div className="flex items-center gap-2">
                 <SidebarTrigger className="md:hidden"/>
                 <h1 className="text-xl font-semibold md:text-2xl whitespace-nowrap">Farmer Home Page</h1>
