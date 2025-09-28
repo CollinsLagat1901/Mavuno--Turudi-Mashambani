@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const ImpactPage = () => {
-    const heroImage = PlaceHolderImages.find((img) => img.id === 'vision-farm');
+    const heroImage = PlaceHolderImages.find((img) => img.id === 'impact-hero-new');
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -154,3 +154,5 @@ const ImpactPage = () => {
 };
 
 export default ImpactPage;
+
+    
