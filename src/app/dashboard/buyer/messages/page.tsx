@@ -6,7 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
-import DashboardLayout from '../_components/dashboard-layout';
+import { auth, db } from '@/lib/firebase-config';
+import { doc, getDoc } from 'firebase/firestore';
+import { User } from 'firebase/auth';
+import BuyerDashboardLayout from '../_components/buyer-dashboard-layout';
 
 const mockUsers = [
   { id: 1, name: "John Kiptoo", role: "Farmer", phone: "+254712345678", lastMessage: "I have fresh maize ready", avatar: '/avatars/john.png' },
@@ -18,32 +21,49 @@ const mockUsers = [
 
 const mockMessages: { [key: number]: { from: 'me' | 'them'; text: string }[] } = {
   1: [
-    { from: "them", text: "Hello, do you have maize ready?" },
-    { from: "me", text: "Yes, I have 20 bags available. Grade A." },
-    { from: "them", text: "What's your price per bag?" },
+    { from: "them", text: "I have fresh maize ready for pickup in Nakuru." },
+    { from: "me", text: "Excellent. What's your price per bag and what's the quality?" },
+    { from: "them", text: "KES 3,000 per 90kg bag. It's Grade A, very clean." },
   ],
   2: [
-    { from: "them", text: "Looking to buy maize in bulk for our milling company." },
-    { from: "me", text: "We can supply from Nakuru. What quantity do you need?" },
+    { from: "them", text: "Hi, I am a large-scale buyer from Nairobi. Are you a verified farmer?" },
   ],
   3: [
-    { from: "them", text: "I saw your request. Need transport to Nairobi?" },
-    { from: "me", text: "Yes, how much per bag for a 5-ton truck?" },
+    { from: "them", text: "My truck is heading to Eldoret empty. Do you have any produce that needs transport back to Nairobi?" },
   ],
   4: [
-    { from: "them", text: "We have high-quality avocados for export. Are you interested?" },
-  ],
-  5: [
-      { from: "them", text: "Our trucks are available for hire. We cover the entire Rift Valley region."}
+      { from: "them", text: "Our cooperative has 10 tons of avocados ready for the export market. We are looking for serious buyers."}
   ]
 };
 
-export default function MessagesPage() {
+export default function BuyerMessagesPage() {
   const [selectedUser, setSelectedUser] = useState(mockUsers[0]);
   const [messages, setMessages] = useState(mockMessages[selectedUser.id]);
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
+  
+  const [user, setUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+        if (userDoc.exists()) {
+          setUserData(userDoc.data());
+        }
+      } else {
+        setUser(null);
+        setUserData(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -67,7 +87,7 @@ export default function MessagesPage() {
   );
 
   return (
-    <DashboardLayout>
+    <BuyerDashboardLayout user={user} userData={userData} loading={loading}>
       <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] lg:grid-cols-[350px_1fr] h-[calc(100vh-65px)]">
         {/* Sidebar */}
         <div className="flex-col border-r bg-muted/20 hidden md:flex">
@@ -76,7 +96,7 @@ export default function MessagesPage() {
              <div className="relative mt-2">
                 <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input 
-                    placeholder="Search by name or role..." 
+                    placeholder="Search farmers, transporters..." 
                     className="pl-8"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -176,13 +196,13 @@ export default function MessagesPage() {
             <div className="flex flex-1 items-center justify-center text-center">
                 <div>
                     <MessageSquare className="mx-auto h-12 w-12 text-muted-foreground" />
-                    <h3 className="mt-4 text-lg font-medium">Start chatting with your network...</h3>
+                    <h3 className="mt-4 text-lg font-medium">Start a conversation</h3>
                     <p className="mt-1 text-sm text-muted-foreground">Select a contact from the left to begin.</p>
                 </div>
             </div>
           )}
         </div>
       </div>
-    </DashboardLayout>
+    </BuyerDashboardLayout>
   );
 }
