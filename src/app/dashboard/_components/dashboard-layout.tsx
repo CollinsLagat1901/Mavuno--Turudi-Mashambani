@@ -171,18 +171,19 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-        <Sidebar collapsible="icon" side="left" variant="sidebar">
+        <Sidebar collapsible="icon" side="left" variant="floating">
           <SidebarHeader>
             <MavunoLogo />
           </SidebarHeader>
           <SidebarContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-2">
               {navLinks.map((link) => (
                 <SidebarMenuItem key={link.href}>
                   <SidebarMenuButton
                     asChild
                     isActive={pathname.startsWith(link.href) && (link.href !== '/dashboard' || pathname === '/dashboard')}
                     tooltip={link.label}
+                    size="lg"
                   >
                     <Link href={link.href}>
                       <link.icon />
