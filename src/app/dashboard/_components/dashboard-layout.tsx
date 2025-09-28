@@ -200,7 +200,7 @@ export default function DashboardLayout({
         <header className="sticky top-0 z-40 flex h-16 items-center justify-between gap-4 border-b bg-background px-4 sm:px-8">
             <div className="flex items-center gap-2">
                 <SidebarTrigger className="md:hidden"/>
-                <h1 className="text-xl font-semibold md:text-2xl whitespace-nowrap">Dashboard</h1>
+                <h1 className="text-xl font-semibold md:text-2xl whitespace-nowrap">Farmer Home Page</h1>
             </div>
              <div className="flex items-center space-x-4">
                 <p className="text-sm text-muted-foreground hidden md:block">
