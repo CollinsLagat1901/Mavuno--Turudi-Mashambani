@@ -3,15 +3,17 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, Moon, Sun } from 'lucide-react';
 import MavunoLogo from '@/components/icons/mavuno-logo';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
 
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const pathname = usePathname();
+  const { setTheme, theme } = useTheme();
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
@@ -47,6 +49,15 @@ const Header = () => {
           <Button asChild>
             <Link href="/auth">Get Started</Link>
           </Button>
+           <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+          >
+            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
         </div>
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger asChild className="md:hidden">
@@ -57,10 +68,19 @@ const Header = () => {
           </SheetTrigger>
           <SheetContent side="right" className="p-0">
             <div className="flex flex-col h-full">
-              <div className="p-4 border-b">
+              <div className="p-4 border-b flex justify-between items-center">
                  <Link href="/" onClick={() => setIsSheetOpen(false)}>
                     <MavunoLogo />
                 </Link>
+                 <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                  >
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <span className="sr-only">Toggle theme</span>
+                  </Button>
               </div>
               <nav className="flex flex-col gap-4 p-4 flex-grow">
                 {navLinks.map((link) => (
