@@ -1,3 +1,4 @@
+
 'use client';
 import { useState, useEffect } from 'react';
 import { auth, db } from '@/lib/firebase-config';
@@ -69,9 +70,6 @@ export default function DashboardPage() {
         <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">
             <div className="flex items-center justify-between space-y-2">
             <div>
-                 <h2 className="text-3xl font-bold tracking-tight">
-                    Farmer Dashboard
-                </h2>
                 <p className="text-muted-foreground">
                     {loading ? <Skeleton className="h-5 w-48 mt-1" /> : `Welcome back, ${userData?.name || 'Farmer'}!`}
                 </p>
