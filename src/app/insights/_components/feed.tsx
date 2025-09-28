@@ -39,7 +39,7 @@ const initialPosts = [
     content: "DISEASE ALERT 🚨: We've received reports of Fall Armyworm in parts of Nakuru county. Farmers are advised to monitor their crops closely and use approved pesticides. Contact your local extension officer for support.",
     timestamp: "5h ago",
     likes: 34,
-    image: "https://picsum.photos/seed/pest-insect/800/400",
+    image: "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/army%20worm.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vYXJteSB3b3JtLmpwZyIsImlhdCI6MTc1OTA4ODc4NCwiZXhwIjoxNzYxNjgwNzg0fQ.ym5pOra7Q4ESVFybifpPmv40rGR_1itOwt790ZOUhhk",
     imageHint: "pest insect",
     comments: []
   },
@@ -189,4 +189,5 @@ const Feed = () => {
 
 export default Feed;
 
+    
     
