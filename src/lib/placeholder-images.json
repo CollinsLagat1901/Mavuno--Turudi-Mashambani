@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-farmer",
-      "description": "A smiling Kenyan farmer in a lush green field.",
-      "imageUrl": "https://images.unsplash.com/photo-1753892209319-d14445a3721f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxLZW55YW4lMjBmYXJtZXIlMjBzbWlsaW5nfGVufDB8fHx8MTc1ODkwOTM4MXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "Kenyan farmer smiling"
+      "description": "A Kenyan woman plowing a field with oxen.",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/mother%20plauwing.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vbW90aGVyIHBsYXV3aW5nLmpwZyIsImlhdCI6MTc1OTE0MTg0NywiZXhwIjoxNzYxNzMzODQ3fQ.hpFTtpijJsIIQ9abAosGvmp7Ej-0xBpzkMvbPaEYni0",
+      "imageHint": "farmer plowing"
     },
     {
       "id": "about-hero",
@@ -93,7 +93,7 @@
     {
       "id": "how-it-works-hero",
       "description": "A close up of a hand holding a phone in a farm.",
-      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/public/folder/photos/homempage%20back.jpg",
+      "imageUrl": "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/homempage%20back.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vaG9tZW1wYWdlIGJhY2suanBnIiwiaWF0IjoxNzU5MDg3MDQ0LCJleHAiOjE3OTA2MjMwNDR9.8uwfWkGvu6ilvgFy7mNC6lDPPtuZV0Rxl8nwB6dlwT8",
       "imageHint": "phone farm"
     },
     {
