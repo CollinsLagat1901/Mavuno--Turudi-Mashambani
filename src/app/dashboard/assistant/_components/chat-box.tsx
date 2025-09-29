@@ -43,7 +43,7 @@ const initialMessages: Message[] = [
         id: 'mock-user-1',
         role: 'user',
         content: "Hi Mavuno, what's wrong with my maize plant? It has these strange yellow streaks.",
-        imageUrl: "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/maize-disease.jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vbWFpemUtZGlzZWFzZS5qcGciLCJpYXQiOjE3NTk0NjE0NDIsImV4cCI6MTc2MjA1MzQ0Mn0.2o5R6hK-wH7Cq0xPAnx4DMr-u-xV6I1kQ1K-Z0T720w",
+        imageUrl: "https://nowqwttrqtklrxgjgxid.supabase.co/storage/v1/object/sign/mavuno/photo/Maize%20Lethal%20Necrosis%20(MLN).jpg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ODJlZjdiMC00NWVmLTQ3YzgtOTE4Ni0wMWUyNmM2ZGNiYTMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtYXZ1bm8vcGhvdG8vTWFpemUgTGV0aGFsIE5lY3Jvc2lzIChNTE4pLmpwZyIsImlhdCI6MTc1OTE1MzQ0NCwiZXhwIjoxNzYxNzQ1NDQ0fQ.rKBIOjGYy8zIBmuJh8xQoTy0Gpg0rCQJSkBfclJ5xo0",
         imageHint: 'maize disease',
     },
     {
