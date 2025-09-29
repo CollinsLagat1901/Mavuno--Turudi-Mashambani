@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
@@ -9,7 +8,7 @@ import { CornerDownLeft, Loader2, Mic, Paperclip, User, Bot, MapPin } from 'luci
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
 
-import { chat, ChatInput, ChatOutput } from '@/ai/flows/assistant-flow';
+import { chat } from '@/ai/flows/assistant-flow';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -96,7 +95,7 @@ export default function ChatBox() {
     // Prepare history for the AI flow
     const historyForAI: {role: 'user' | 'model', content: string}[] = messages.map(msg => ({
         role: msg.role,
-        content: msg.content
+        content: msg.imageUrl ? `${msg.content}\n![${msg.imageHint || 'image'}](${msg.imageUrl})` : msg.content
     }));
 
 
@@ -250,5 +249,4 @@ export default function ChatBox() {
       </div>
     </div>
   );
-
-    
+}
