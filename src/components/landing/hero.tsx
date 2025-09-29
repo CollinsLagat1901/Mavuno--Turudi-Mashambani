@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -14,7 +15,7 @@ const Hero = () => {
           src={heroImage.imageUrl}
           alt={heroImage.description}
           fill
-          className="object-cover"
+          className="object-contain object-bottom"
           priority
           data-ai-hint={heroImage.imageHint}
         />
